@@ -15,6 +15,18 @@ const Theme = createTheme({
   typography: {
     fontFamily: ["vazir", "vazir-bold", "roboto", "sans-serif"].join(","),
   },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        variant: "contained"
+      }
+    },
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined'
+      }
+    }
+  }
 });
 
 export default Theme;
