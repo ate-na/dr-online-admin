@@ -1,47 +1,17 @@
-import { Box, BoxProps, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import KeyIcon from "@mui/icons-material/Key";
 import authSvg from "../../assets/auth.svg";
 
-import { FC, PropsWithChildren } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import TextField from "../../components/kits/TextField";
 import { useLoginStyles } from "./index.style";
 import { loginFormValidation } from "./index.constant";
 import { TLoginFC } from "./index.type";
-
-
-interface ICustomFlexBoxProps extends PropsWithChildren, BoxProps {
-  justifyContent?: string;
-  alignItems?: string;
-}
-
-type TCustomFlexBoxFC = FC<ICustomFlexBoxProps>;
-
-const CustomFlexBox: TCustomFlexBoxFC = ({
-  children,
-  alignItems = "center",
-  justifyContent = "center",
-  ...props
-}) => {
-  return (
-    <Box
-      height="100%"
-      width="100%"
-      display="flex"
-      justifyContent={justifyContent}
-      alignItems={alignItems}
-      flexDirection="column"
-      {...props}
-    >
-      {children}
-    </Box>
-  );
-};
-
+import FlexBox from "../../components/kits/FlexBox";
 
 const Login: TLoginFC = () => {
   const { classes } = useLoginStyles();
@@ -57,14 +27,14 @@ const Login: TLoginFC = () => {
     <Box className={classes.root}>
       <Grid container spacing={2}>
         <Grid item md={6}>
-          <CustomFlexBox height="100%" width="100%" flexDirection="column">
-            <CustomFlexBox width="100%" gap={2} mb={5}>
+          <FlexBox height="100%" width="100%" flexDirection="column">
+            <FlexBox width="100%" gap={2}>
               <VerifiedUserIcon fontSize="large" />
               <Typography variant="h4" component="h1">
                 ورود به پنل ادمین دکتر آنلاین
               </Typography>
-            </CustomFlexBox>
-            <CustomFlexBox
+            </FlexBox>
+            <FlexBox
               width="100%"
               alignItems="flex-start"
               gap={2}
@@ -89,8 +59,8 @@ const Login: TLoginFC = () => {
               <Button type="submit" fullWidth>
                 ورود به حساب
               </Button>
-            </CustomFlexBox>
-          </CustomFlexBox>
+            </FlexBox>
+          </FlexBox>
         </Grid>
         <Grid item md={6}>
           <img src={authSvg} alt="auth" />

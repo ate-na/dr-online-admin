@@ -1,0 +1,23 @@
+import { FC } from "react";
+
+interface IColumns {
+  label: string;
+  name: string;
+  width?: number;
+}
+
+interface ITableProps {
+  isEdit?: boolean;
+  isDelete?: boolean;
+  handleDelete?: (data: Record<string, any>) => void;
+  handleEdit?: (data: Record<string, any>) => void;
+  columns: IColumns[];
+  rows: Record<string, any>[];
+  dataKey: string;
+  title?: string;
+  isCreateButton?: boolean;
+  handleCreateButton?: (data: Record<string, any>) => void;
+  createLabel?: string;
+}
+
+export type TTable = FC<ITableProps>;

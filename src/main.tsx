@@ -8,6 +8,9 @@ import createCache from "@emotion/cache";
 import { CacheProvider, ThemeProvider } from "@emotion/react";
 import Theme from "./utils/theme.ts";
 import { CssBaseline } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
+import RoutesNavigation from "./routes/index.tsx";
+import Layout from "./layout/index.tsx";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -19,7 +22,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={Theme}>
         <CssBaseline />
-        <App />
+        <BrowserRouter>
+          <Layout>
+            <RoutesNavigation>
+              <App />
+            </RoutesNavigation>
+          </Layout>
+        </BrowserRouter>
       </ThemeProvider>
     </CacheProvider>
   </React.StrictMode>
