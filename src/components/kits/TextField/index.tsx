@@ -2,14 +2,14 @@ import { TextField as MuiTextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 import { TTextFieldFC } from "./index.type";
 
-
-
 const TextField: TTextFieldFC = ({
   helperText,
   icon,
   label,
   name,
   control,
+  rows = 1,
+  multiline = false,
 }) => {
   return (
     <Controller
@@ -27,6 +27,9 @@ const TextField: TTextFieldFC = ({
             InputProps={{
               startAdornment: icon,
             }}
+            rows={rows}
+            multiline={multiline}
+            sx={{ color: "red" }}
           />
         );
       }}
@@ -34,5 +37,4 @@ const TextField: TTextFieldFC = ({
   );
 };
 
-
-export default TextField
+export default TextField;

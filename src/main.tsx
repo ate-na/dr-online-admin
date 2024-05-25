@@ -11,6 +11,9 @@ import { CssBaseline } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import RoutesNavigation from "./routes/index.tsx";
 import Layout from "./layout/index.tsx";
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { Api } from "./api/base.tsx";
+import { AuthContextProvider } from "./context/index.tsx";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -23,11 +26,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ThemeProvider theme={Theme}>
         <CssBaseline />
         <BrowserRouter>
-          <Layout>
-            <RoutesNavigation>
-              <App />
-            </RoutesNavigation>
-          </Layout>
+          <ApiProvider api={Api}>
+            <AuthContextProvider>
+              <RoutesNavigation>
+                <App />
+              </RoutesNavigation>
+            </AuthContextProvider>
+          </ApiProvider>
         </BrowserRouter>
       </ThemeProvider>
     </CacheProvider>
