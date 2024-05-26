@@ -9,9 +9,7 @@ const Modal: TModal = ({
   title,
   height = "50%",
   width = "40%",
-  justifyContent = "flex-start",
   flexDirection = "column",
-  alignItems = "flex-start",
   bgcolor = "#282E34",
   children,
 }) => {
@@ -20,16 +18,13 @@ const Modal: TModal = ({
       <FlexBox>
         <FlexBox
           flexDirection={flexDirection}
-          justifyContent={justifyContent}
-          alignItems={alignItems}
-          gap={2}
           bgcolor={bgcolor}
           p={4}
           width={width}
           height={height}
           borderRadius={2}
         >
-          <FlexBox justifyContent="space-between">
+          <FlexBox justifyContent="space-between" height={'20%'}>
             <Typography variant="h5" component={"h2"}>
               {title}
             </Typography>

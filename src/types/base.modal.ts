@@ -11,3 +11,9 @@ export interface IBaseUser {
 export interface IResponse<T> {
   data: T;
 }
+
+
+export interface IResponseData<T>{
+  content:T,
+  count:number
+}

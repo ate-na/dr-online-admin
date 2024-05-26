@@ -8,7 +8,15 @@ import {
 import { TSelect } from "./index.types";
 import { Controller } from "react-hook-form";
 
-const Select: TSelect = ({ items, selectLabel, helperText = "",name,control }) => {
+const Select: TSelect = ({
+  items,
+  selectLabel,
+  helperText = "",
+  name,
+  control,
+  disabled = false,
+}) => {
+  console.log(disabled)
   return (
     <>
       <Controller
@@ -20,6 +28,7 @@ const Select: TSelect = ({ items, selectLabel, helperText = "",name,control }) =
             <FormControl fullWidth>
               <InputLabel>{selectLabel}</InputLabel>
               <MuiSelect
+                disabled={disabled}
                 fullWidth
                 label={selectLabel}
                 error={!!error}

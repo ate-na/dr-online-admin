@@ -6,6 +6,7 @@ import {
   TableBody,
   Button,
   Typography,
+  LinearProgress,
 } from "@mui/material";
 import { TTable } from "./index.types";
 import FlexBox from "../FlexBox";
@@ -22,7 +23,9 @@ const Table: TTable = ({
   isCreateButton,
   handleCreateButton,
   createLabel,
+  loading,
 }) => {
+  console.log("table ",loading,rows)
   return (
     <>
       <FlexBox justifyContent="space-between" mb={2}>
@@ -73,6 +76,7 @@ const Table: TTable = ({
           })}
         </TableBody>
       </MuiTable>
+      {loading && <LinearProgress />}
     </>
   );
 };

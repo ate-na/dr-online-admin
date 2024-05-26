@@ -4,12 +4,10 @@ import { APP_HEADER_MENU_ITEMS } from "./index.constant";
 import { Link } from "react-router-dom";
 import FlexBox from "../FlexBox";
 import { Logout } from "@mui/icons-material";
-import AuthContext from "../../../context";
-import { useContext } from "react";
+import useAuth from "../../../hooks/authenticatedUser";
 
 const Header: THeaderType = () => {
-  const authCtx = useContext(AuthContext);
-  console.log(authCtx);
+  const authCtx = useAuth();
 
   return (
     <AppBar position="static">

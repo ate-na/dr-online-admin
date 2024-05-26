@@ -18,6 +18,7 @@ interface ITableProps {
   isCreateButton?: boolean;
   handleCreateButton?: (data: Record<string, any>) => void;
   createLabel?: string;
+  loading?: boolean;
 }
 
 export type TTable = FC<ITableProps>;

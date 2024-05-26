@@ -4,9 +4,25 @@ import Select from "../../../components/kits/Select";
 import { useForm } from "react-hook-form";
 import TextField from "../../../components/kits/TextField";
 import Modal from "../../../components/kits/Modal";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { locationFormValidation } from "./index.constants";
+import useCities from "../../../hooks/cities";
 
 const CreateLocation: TCreateLocation = ({ open = false, handleClose }) => {
-  const { control } = useForm();
+  const { control, handleSubmit } = useForm({
+    resolver: zodResolver(locationFormValidation),
+  });
+
+  const { cities, cityLoading } = useCities();
+  const onSubmit = handleSubmit(
+    (data) => {
+      console.log("called", data);
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+
   return (
     <Modal
       title="ساخت آدرس جدید"
@@ -14,33 +30,40 @@ const CreateLocation: TCreateLocation = ({ open = false, handleClose }) => {
       justifyContent={"flex-start"}
       alignItems="flex-start"
       bgcolor={"#282E34"}
-      p={4}
+      p={2}
       width={"40%"}
       height={"50%"}
       open={open}
       handleClose={handleClose}
     >
-      <Select
-        control={control}
-        name="city"
-        items={[
-          { label: "تهران", value: 0 },
-          { label: "مشهد", value: 1 },
-          { label: "شیراز", value: 2 },
-        ]}
-        selectLabel="شهر"
-      />
-      <TextField
-        control={control}
-        name="location-form"
-        label="آدرس محلی"
-        helperText=""
-        rows={5}
-        multiline
-      />
-      <Button type="submit" fullWidth>
-        ذخیره سازی تغییرات
-      </Button>
+      <form
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+        }}
+        onSubmit={onSubmit}
+      >
+        <Select
+          disabled={cityLoading}
+          control={control}
+          name="city"
+          items={cities.map((e) => ({ value: e.id, label: e.name }))}
+          selectLabel="شهر"
+        />
+        <TextField
+          control={control}
+          name="locationform"
+          label="آدرس محلی"
+          helperText=""
+          rows={5}
+          multiline
+        />
+        <Button type="submit" fullWidth>
+          ذخیره سازی تغییرات
+        </Button>
+      </form>
     </Modal>
   );
 };
