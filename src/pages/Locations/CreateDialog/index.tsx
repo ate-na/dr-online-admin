@@ -1,4 +1,3 @@
-import { Button } from "@mui/material";
 import { TCreateLocation } from "./index.types";
 import Select from "../../../components/kits/Select";
 import { useForm } from "react-hook-form";
@@ -7,21 +6,38 @@ import Modal from "../../../components/kits/Modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { locationFormValidation } from "./index.constants";
 import useCities from "../../../hooks/cities";
+import { useCreateLocationMutation } from "../../../api/location";
+import Button from "../../../components/kits/Button";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const CreateLocation: TCreateLocation = ({ open = false, handleClose }) => {
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(locationFormValidation),
   });
 
+  const [submit, { isLoading, isSuccess, isError, error }] =
+    useCreateLocationMutation();
+
   const { cities, cityLoading } = useCities();
   const onSubmit = handleSubmit(
-    (data) => {
-      console.log("called", data);
+    async (data: any) => {
+      await submit(data);
     },
     (err) => {
       console.log(err);
     }
   );
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("با موفقیت ایجاد شد");
+      reset();
+      handleClose();
+    } else if (isError && error) {
+      toast.error("با شکست مواجه شد");
+    }
+  }, [isSuccess]);
 
   return (
     <Modal
@@ -54,13 +70,13 @@ const CreateLocation: TCreateLocation = ({ open = false, handleClose }) => {
         />
         <TextField
           control={control}
-          name="locationform"
+          name="address"
           label="آدرس محلی"
           helperText=""
           rows={5}
           multiline
         />
-        <Button type="submit" fullWidth>
+        <Button type="submit" fullWidth loading={isLoading}>
           ذخیره سازی تغییرات
         </Button>
       </form>

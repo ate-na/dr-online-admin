@@ -6,13 +6,13 @@ interface IColumns {
   width?: number;
 }
 
-interface ITableProps {
+interface ITableProps<T> {
   isEdit?: boolean;
   isDelete?: boolean;
   handleDelete?: (data: Record<string, any>) => void;
   handleEdit?: (data: Record<string, any>) => void;
   columns: IColumns[];
-  rows: Record<string, any>[];
+  rows: T[];
   dataKey: string;
   title?: string;
   isCreateButton?: boolean;
@@ -21,4 +21,4 @@ interface ITableProps {
   loading?: boolean;
 }
 
-export type TTable = FC<ITableProps>;
+export type TTable<T> = FC<ITableProps<T>>;

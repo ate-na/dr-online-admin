@@ -11,6 +11,7 @@ interface IModal extends PropsWithChildren{
   alignItems?:string
   bgcolor?:string
   p?:number
+  gap?:number
 }
 
 export type TModal = FC<IModal>;

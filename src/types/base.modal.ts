@@ -12,8 +12,9 @@ export interface IResponse<T> {
   data: T;
 }
 
-
-export interface IResponseData<T>{
-  content:T,
-  count:number
+export interface IDatasourcePageRes<T> {
+  content: T;
+  count: number;
 }
+
+export type TProvideTags = "locations";

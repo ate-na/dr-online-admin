@@ -10,10 +10,10 @@ import Theme from "./utils/theme.ts";
 import { CssBaseline } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import RoutesNavigation from "./routes/index.tsx";
-import Layout from "./layout/index.tsx";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { Api } from "./api/base.tsx";
 import { AuthContextProvider } from "./context/index.tsx";
+import { Toaster } from "react-hot-toast";
 
 const cacheRtl = createCache({
   key: "muirtl",
@@ -28,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <ApiProvider api={Api}>
             <AuthContextProvider>
+                <Toaster/>
               <RoutesNavigation>
                 <App />
               </RoutesNavigation>

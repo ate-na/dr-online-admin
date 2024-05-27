@@ -12,6 +12,8 @@ const Modal: TModal = ({
   flexDirection = "column",
   bgcolor = "#282E34",
   children,
+  p=4,
+  gap=2
 }) => {
   return (
     <MuiModal open={open} onClose={handleClose}>
@@ -19,7 +21,8 @@ const Modal: TModal = ({
         <FlexBox
           flexDirection={flexDirection}
           bgcolor={bgcolor}
-          p={4}
+          p={p}
+          gap={gap}
           width={width}
           height={height}
           borderRadius={2}

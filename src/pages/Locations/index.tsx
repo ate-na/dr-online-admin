@@ -1,20 +1,36 @@
 import { TLocationType } from "./index.types";
 import Table from "../../components/kits/Table";
-import { columns, rows } from "./index.constant";
+import Modal from "../../components/kits/Modal";
+
+import { columns } from "./index.constant";
 import { useState } from "react";
 import CreateLocation from "./CreateDialog";
 import { useGetLocationsQuery } from "../../api/location";
 import { LinearProgress } from "@mui/material";
+import ConfirmModal from "../../components/kits/Confirm";
 import { ILocation } from "../../types/location.model";
 
 const Location: TLocationType = () => {
-  const [CreateDialogOpen, setCreateDialogOpen] = useState(false);
+  const [openDeleteDialg, setOpenDeleteDialg] = useState<ILocation | undefined>(
+    undefined
+  );
+  const [CreateDialogOpen, setCreateDialogOpen] = useState<boolean>(false);
 
   const { data, isLoading } = useGetLocationsQuery();
 
-  const HandleDelete = (data: Record<string, any>) => {
-    console.log(data);
+  const HandleDelete = (data: ILocation) => {
+    setOpenDeleteDialg(data);
   };
+
+  const deleteItemHandler = () => {
+    //Delete Handler
+    setOpenDeleteDialg(() => undefined);
+  };
+  const cancelDeleteHandler = () => {
+    console.log("called",openDeleteDialg)
+    setOpenDeleteDialg(() => undefined);
+  };
+
   const HandleEdit = (data: Record<string, any>) => {
     console.log(data);
   };
@@ -28,7 +44,7 @@ const Location: TLocationType = () => {
     setCreateDialogOpen(() => false);
   };
 
-  if(isLoading) return <LinearProgress/>
+  if (isLoading) return <LinearProgress />;
 
   return (
     <>
@@ -37,7 +53,7 @@ const Location: TLocationType = () => {
         loading={isLoading}
         title="لیست آدرس ها"
         columns={columns}
-        rows={data.content as ILocation[]}
+        rows={data?.content || []}
         dataKey="id"
         isDelete={true}
         isEdit={true}
@@ -47,6 +63,15 @@ const Location: TLocationType = () => {
         isCreateButton={true}
         handleCreateButton={HandleCreateButton}
       />
+        <ConfirmModal
+          open={typeof openDeleteDialg !== undefined ? true : false}
+          title="آیا از حذف این آیتم اطمینان دارید ؟"
+          agreeTitle="بله اطمینان دارم"
+          cancelTitle="خیر لغو درخواست"
+          agreeHandler={deleteItemHandler}
+          cancelHandler={cancelDeleteHandler}
+          handleClose={cancelDeleteHandler}
+        />
     </>
   );
 };
