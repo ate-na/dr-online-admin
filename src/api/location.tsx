@@ -4,7 +4,7 @@ import {
   TCreateOrUpdateResponse,
 } from "../types/location.model";
 import { Api } from "./base";
-import { provideTagsType } from "./index.constant";
+import { provideTags, provideTagsType } from "./index.constant";
 
 const locationApi = Api.injectEndpoints({
   endpoints: (build) => ({
@@ -30,7 +30,20 @@ const locationApi = Api.injectEndpoints({
       },
       invalidatesTags: [provideTagsType.location],
     }),
+    deleteLocation: build.mutation<void, number>({
+      query: (body) => {
+        return {
+          url: `/locations/${body}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: [provideTagsType.location],
+    }),
   }),
 });
 
-export const { useGetLocationsQuery, useCreateLocationMutation } = locationApi;
+export const {
+  useGetLocationsQuery,
+  useCreateLocationMutation,
+  useDeleteLocationMutation,
+} = locationApi;

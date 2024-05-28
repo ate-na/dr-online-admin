@@ -1,4 +1,4 @@
-import {  DialogActions } from "@mui/material";
+import { DialogActions } from "@mui/material";
 import { TConfirm } from "./index.types";
 import Button from "../Button";
 import Modal from "../Modal";
@@ -12,20 +12,25 @@ const ConfirmModal: TConfirm = ({
   agreeHandler,
   cancelHandler,
 }) => {
-    console.log("modal",open)
+  console.log("modal", open);
   return (
     <Modal
-    open={open}
-    handleClose={handleClose}
-    title={title}
-    height="20%"
-    p={4}
-  >
-    <DialogActions sx={{width:'100%'}}>
-      <Button fullWidth onClick={cancelHandler}>{cancelTitle}</Button>
-      <Button fullWidth onClick={agreeHandler}>{agreeTitle}</Button>
-    </DialogActions>
-  </Modal>
+      open={open}
+      handleClose={handleClose}
+      title={title}
+      height="25%"
+      p={4}
+      gap={5}
+    >
+      <DialogActions sx={{ width: "100%" }}>
+        <Button fullWidth onClick={cancelHandler} size="small">
+          {cancelTitle}
+        </Button>
+        <Button fullWidth onClick={agreeHandler} size="small">
+          {agreeTitle}
+        </Button>
+      </DialogActions>
+    </Modal>
   );
 };
 

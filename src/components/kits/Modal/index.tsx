@@ -12,8 +12,8 @@ const Modal: TModal = ({
   flexDirection = "column",
   bgcolor = "#282E34",
   children,
-  p=4,
-  gap=2
+  p = 4,
+  gap = 2,
 }) => {
   return (
     <MuiModal open={open} onClose={handleClose}>
@@ -27,7 +27,7 @@ const Modal: TModal = ({
           height={height}
           borderRadius={2}
         >
-          <FlexBox justifyContent="space-between" height={'20%'}>
+          <FlexBox justifyContent="space-between" height={"20%"}>
             <Typography variant="h5" component={"h2"}>
               {title}
             </Typography>
