@@ -15,8 +15,9 @@ const Select: TSelect = ({
   name,
   control,
   disabled = false,
+  defaultValue,
 }) => {
-  console.log(disabled)
+  console.log(disabled);
   return (
     <>
       <Controller
@@ -28,6 +29,7 @@ const Select: TSelect = ({
             <FormControl fullWidth>
               <InputLabel>{selectLabel}</InputLabel>
               <MuiSelect
+                defaultValue={defaultValue}
                 disabled={disabled}
                 fullWidth
                 label={selectLabel}
@@ -35,7 +37,7 @@ const Select: TSelect = ({
                 {...field}
               >
                 {items.map((element) => (
-                  <MenuItem value={element.label}>{element.label}</MenuItem>
+                  <MenuItem key={element.label} value={element.label}>{element.label}</MenuItem>
                 ))}
               </MuiSelect>
               <FormHelperText>{helperText || error}</FormHelperText>

@@ -11,15 +11,21 @@ import Button from "../../../components/kits/Button";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
-const CreateLocation: TCreateLocation = ({ open = false, handleClose }) => {
-  const { control, handleSubmit, reset } = useForm({
+const CreateLocation: TCreateLocation = ({
+  open = false,
+  handleClose,
+  data,
+}) => {
+  const { cities, cityLoading } = useCities();
+  const { control, handleSubmit, reset,  } = useForm({
     resolver: zodResolver(locationFormValidation),
+    values: { ...data },
   });
+
 
   const [submit, { isLoading, isSuccess, isError, error }] =
     useCreateLocationMutation();
 
-  const { cities, cityLoading } = useCities();
   const onSubmit = handleSubmit(
     async (data: any) => {
       await submit(data);
@@ -62,6 +68,7 @@ const CreateLocation: TCreateLocation = ({ open = false, handleClose }) => {
         onSubmit={onSubmit}
       >
         <Select
+       
           disabled={cityLoading}
           control={control}
           name="city"

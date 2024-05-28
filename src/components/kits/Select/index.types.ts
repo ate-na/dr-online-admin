@@ -10,6 +10,7 @@ interface ISelectProps {
   helperText?: string;
   name: string;
   control: any;
-  disabled?:boolean
+  disabled?:boolean,
+  defaultValue?:any
 }
 export type TSelect = FC<ISelectProps>;

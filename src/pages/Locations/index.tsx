@@ -21,6 +21,8 @@ const Location: TLocationType = () => {
   );
   const [CreateDialogOpen, setCreateDialogOpen] = useState<boolean>(false);
 
+  const [updateDialogOpen, setUpdateDialogOpen] = useState<ILocation | undefined>(undefined);
+
   const [handleSubmitDeleteHandler, dataDleted] = useDeleteLocationMutation();
 
   const { data, isLoading } = useGetLocationsQuery();
@@ -42,8 +44,9 @@ const Location: TLocationType = () => {
     setOpenDeleteDialg(() => undefined);
   };
 
-  const HandleEdit = (data: Record<string, any>) => {
+  const HandleEdit = (data: ILocation) => {
     console.log(data);
+    setUpdateDialogOpen(()=>data)
   };
 
   const HandleCreateButton = () => {
@@ -53,13 +56,14 @@ const Location: TLocationType = () => {
 
   const HandleClose = () => {
     setCreateDialogOpen(() => false);
+    setUpdateDialogOpen(()=>undefined)
   };
 
   if (isLoading) return <LinearProgress />;
 
   return (
     <>
-      <CreateLocation open={CreateDialogOpen} handleClose={HandleClose} />
+      <CreateLocation open={CreateDialogOpen || !!updateDialogOpen} data={updateDialogOpen} handleClose={HandleClose} />
       <Table
         loading={isLoading}
         title="لیست آدرس ها"
