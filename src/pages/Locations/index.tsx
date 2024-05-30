@@ -69,6 +69,7 @@ const Location: TLocationType = () => {
         title="لیست آدرس ها"
         columns={columns}
         rows={data?.content || []}
+        count={data?.count|| 10}
         dataKey="id"
         isDelete={true}
         isEdit={true}

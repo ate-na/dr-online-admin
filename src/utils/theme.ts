@@ -18,15 +18,20 @@ const Theme = createTheme({
   components: {
     MuiButton: {
       defaultProps: {
-        variant: "contained"
-      }
+        variant: "contained",
+      },
     },
     MuiTextField: {
       defaultProps: {
-        variant: 'outlined'
-      }
-    }
-  }
+        variant: "outlined",
+      },
+    },
+    MuiPagination: {
+      defaultProps: {
+        dir: "ltr",
+      },
+    },
+  },
 });
 
 export default Theme;

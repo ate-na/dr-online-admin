@@ -7,9 +7,11 @@ import {
   Button,
   Typography,
   LinearProgress,
+  Pagination,
 } from "@mui/material";
 import { TTable } from "./index.types";
 import FlexBox from "../FlexBox";
+import {totalPage} from '../../../utils/helper'
 
 const Table: TTable = ({
   columns,
@@ -24,8 +26,9 @@ const Table: TTable = ({
   handleCreateButton,
   createLabel,
   loading,
+  count = 10,
 }) => {
-  console.log("table ",loading,rows)
+  console.log("table ", loading, rows);
   return (
     <>
       <FlexBox justifyContent="space-between" mb={2}>
@@ -76,6 +79,10 @@ const Table: TTable = ({
           })}
         </TableBody>
       </MuiTable>
+      {console.log("the count is", count,totalPage(count))}
+      <FlexBox justifyContent="center" width={"100%"}>
+        <Pagination count={totalPage(count)} shape="rounded" size="large" />
+      </FlexBox>
       {loading && <LinearProgress />}
     </>
   );

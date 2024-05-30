@@ -19,6 +19,7 @@ interface ITableProps<T> {
   handleCreateButton?: (data: Record<string, any>) => void;
   createLabel?: string;
   loading?: boolean;
+  count?: number;
 }
 
 export type TTable<T> = FC<ITableProps<T>>;
