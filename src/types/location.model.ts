@@ -18,8 +18,8 @@ export interface ILocation {
 
 export type TLocationPageRes = IDatasourcePageRes<ILocation>;
 
-export type TCreateOrEditLocationReqBody = Omit<ILocation, "id">;
+export type TCreateOrEditLocationReqBody = ILocation;
 
-export type TCreateOrUpdateResponse=[number,ILocation]
+export type TCreateOrUpdateResponse = [number, ILocation];
 
 // export interface IUpdateResponse

@@ -1,18 +1,17 @@
 import { TLocationType } from "./index.types";
 import Table from "../../components/kits/Table";
-import Modal from "../../components/kits/Modal";
 
 import { columns } from "./index.constant";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateLocation from "./CreateDialog";
 import {
   useDeleteLocationMutation,
   useGetLocationsQuery,
+  useUpdateLocationMutation,
 } from "../../api/location";
 import { LinearProgress } from "@mui/material";
 import ConfirmModal from "../../components/kits/Confirm";
 import { ILocation } from "../../types/location.model";
-import toast from "react-hot-toast";
 import useErrorHandling from "../../hooks/test";
 
 const Location: TLocationType = () => {
@@ -21,13 +20,19 @@ const Location: TLocationType = () => {
   );
   const [CreateDialogOpen, setCreateDialogOpen] = useState<boolean>(false);
 
-  const [updateDialogOpen, setUpdateDialogOpen] = useState<ILocation | undefined>(undefined);
+  const [updateDialogOpen, setUpdateDialogOpen] = useState<
+    ILocation | undefined
+  >(undefined);
 
   const [handleSubmitDeleteHandler, dataDleted] = useDeleteLocationMutation();
+  const [handleSubmitUpdateHandler, updateData] = useUpdateLocationMutation();
 
   const { data, isLoading } = useGetLocationsQuery();
 
-  useErrorHandling(dataDleted);
+  useErrorHandling({
+    isError: !!dataDleted.isError || !!updateData.isError,
+    isSuccess: !!dataDleted.isSuccess || !!updateData.isSuccess,
+  });
   const HandleDelete = (data: ILocation) => {
     setOpenDeleteDialg(data);
   };
@@ -46,7 +51,7 @@ const Location: TLocationType = () => {
 
   const HandleEdit = (data: ILocation) => {
     console.log(data);
-    setUpdateDialogOpen(()=>data)
+    setUpdateDialogOpen(() => data);
   };
 
   const HandleCreateButton = () => {
@@ -56,14 +61,18 @@ const Location: TLocationType = () => {
 
   const HandleClose = () => {
     setCreateDialogOpen(() => false);
-    setUpdateDialogOpen(()=>undefined)
+    setUpdateDialogOpen(() => undefined);
   };
 
   if (isLoading) return <LinearProgress />;
 
   return (
     <>
-      <CreateLocation open={CreateDialogOpen || !!updateDialogOpen} data={updateDialogOpen} handleClose={HandleClose} />
+      <CreateLocation
+        open={CreateDialogOpen || !!updateDialogOpen}
+        data={updateDialogOpen}
+        handleClose={HandleClose}
+      />
       <Table
         loading={isLoading}
         title="لیست آدرس ها"
