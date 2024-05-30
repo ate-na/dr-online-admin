@@ -8,8 +8,7 @@ import { locationFormValidation } from "./index.constants";
 import useCities from "../../../hooks/cities";
 import { useCreateLocationMutation } from "../../../api/location";
 import Button from "../../../components/kits/Button";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
+import useErrorHandling from "../../../hooks/test";
 
 const CreateLocation: TCreateLocation = ({
   open = false,
@@ -17,33 +16,27 @@ const CreateLocation: TCreateLocation = ({
   data,
 }) => {
   const { cities, cityLoading } = useCities();
-  const { control, handleSubmit, reset,  } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(locationFormValidation),
     values: { ...data },
   });
 
+  const [submit, createSubmitData] = useCreateLocationMutation();
 
-  const [submit, { isLoading, isSuccess, isError, error }] =
-    useCreateLocationMutation();
+  useErrorHandling(createSubmitData);
 
   const onSubmit = handleSubmit(
-    async (data: any) => {
-      await submit(data);
+    async (value: any) => {
+      if(data && data.id){
+
+      }else{}
+      await submit(value);
     },
     (err) => {
       console.log(err);
     }
   );
 
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("با موفقیت ایجاد شد");
-      reset();
-      handleClose();
-    } else if (isError && error) {
-      toast.error("با شکست مواجه شد");
-    }
-  }, [isSuccess]);
 
   return (
     <Modal
@@ -68,7 +61,6 @@ const CreateLocation: TCreateLocation = ({
         onSubmit={onSubmit}
       >
         <Select
-       
           disabled={cityLoading}
           control={control}
           name="city"
@@ -83,7 +75,7 @@ const CreateLocation: TCreateLocation = ({
           rows={5}
           multiline
         />
-        <Button type="submit" fullWidth loading={isLoading}>
+        <Button type="submit" fullWidth loading={!!createSubmitData?.isLoading}>
           ذخیره سازی تغییرات
         </Button>
       </form>

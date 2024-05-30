@@ -30,6 +30,19 @@ const locationApi = Api.injectEndpoints({
       },
       invalidatesTags: [provideTagsType.location],
     }),
+    updateLocation: build.mutation<
+      TCreateOrUpdateResponse,
+      TCreateOrEditLocationReqBody
+    >({
+      query: (arg) => {
+        return {
+          url: `/locations/${arg?.id}`,
+          method: "POST",
+          body: arg,
+        };
+      },
+      invalidatesTags: [provideTagsType.location],
+    }),
     deleteLocation: build.mutation<void, number>({
       query: (body) => {
         return {
@@ -46,4 +59,5 @@ export const {
   useGetLocationsQuery,
   useCreateLocationMutation,
   useDeleteLocationMutation,
+  useUpdateLocationMutation
 } = locationApi;
