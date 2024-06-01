@@ -8,7 +8,7 @@ const useCities = () => {
     setcitiLoading(true);
     const getData = async () => {
       try {
-        const data = await fetch("https://dronline-crm.liara.run/cities.json");
+        const data = await fetch("http://localhost:5173/cities.json");
         const res = await data.json();
         setCities(() => res);
         setcitiLoading(false);

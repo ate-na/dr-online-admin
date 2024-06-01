@@ -6,6 +6,7 @@ import Layout from "../layout";
 import { useContext } from "react";
 import AuthContext from "../context";
 import Admin from "../pages/Admin";
+import Categories from "../pages/Categories";
 
 const RoutesNavigation = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -18,6 +19,7 @@ const RoutesNavigation = () => {
             <Route path="/" element={<Admin />} />
             <Route path="/therapists" element={<Therapists />} />
             <Route path="/locations" element={<Location />} />
+            <Route path="/category" element={<Categories />} />
           </Routes>
         </Layout>
       )}

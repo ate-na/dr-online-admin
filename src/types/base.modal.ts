@@ -13,7 +13,7 @@ export interface IResponse<T> {
 }
 
 export interface IDatasourcePageRes<T> {
-  content: T;
+  content: T[];
   count: number;
 }
 

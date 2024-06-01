@@ -11,9 +11,8 @@ import {
 } from "@mui/material";
 import { TTable } from "./index.types";
 import FlexBox from "../FlexBox";
-import {totalPage} from '../../../utils/helper'
 
-const Table: TTable = ({
+const Table: TTable<any> = ({
   columns,
   rows,
   dataKey,
@@ -26,9 +25,14 @@ const Table: TTable = ({
   handleCreateButton,
   createLabel,
   loading,
-  count = 10,
+  handleChangePage,
+  currentPage,
+  totalPage = 10,
 }) => {
-  console.log("table ", loading, rows);
+  const pages =
+    totalPage % 10 > 5 || totalPage % 10 === 0
+      ? Math.round(totalPage / 10)
+      : Math.round(totalPage / 10) + 1;
   return (
     <>
       <FlexBox justifyContent="space-between" mb={2}>
@@ -79,9 +83,13 @@ const Table: TTable = ({
           })}
         </TableBody>
       </MuiTable>
-      {console.log("the count is", count,totalPage(count))}
       <FlexBox justifyContent="center" width={"100%"}>
-        <Pagination count={totalPage(count)} shape="rounded" size="large" />
+        <Pagination
+          color="secondary"
+          page={currentPage}
+          count={pages}
+          onChange={(_, page: number) => handleChangePage(page)}
+        />
       </FlexBox>
       {loading && <LinearProgress />}
     </>

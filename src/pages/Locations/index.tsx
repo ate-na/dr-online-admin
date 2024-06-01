@@ -2,22 +2,24 @@ import { TLocationType } from "./index.types";
 import Table from "../../components/kits/Table";
 
 import { columns } from "./index.constant";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateLocation from "./CreateDialog";
 import {
   useDeleteLocationMutation,
   useGetLocationsQuery,
-  useUpdateLocationMutation,
 } from "../../api/location";
 import { LinearProgress } from "@mui/material";
 import ConfirmModal from "../../components/kits/Confirm";
 import { ILocation } from "../../types/location.model";
-import useErrorHandling from "../../hooks/test";
+import useErrorHandling from "../../hooks/useErrorHandling";
+import { useSearchParams } from "react-router-dom";
+import { getSearchParamsFilters } from "../../utils/searchParamsData";
 
 const Location: TLocationType = () => {
   const [openDeleteDialg, setOpenDeleteDialg] = useState<ILocation | undefined>(
     undefined
   );
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [CreateDialogOpen, setCreateDialogOpen] = useState<boolean>(false);
 
   const [updateDialogOpen, setUpdateDialogOpen] = useState<
@@ -25,13 +27,20 @@ const Location: TLocationType = () => {
   >(undefined);
 
   const [handleSubmitDeleteHandler, dataDleted] = useDeleteLocationMutation();
-  const [handleSubmitUpdateHandler, updateData] = useUpdateLocationMutation();
 
-  const { data, isLoading } = useGetLocationsQuery();
+  const [searchParams, setSearchPrams] = useSearchParams();
+
+  const { data, isLoading, refetch } = useGetLocationsQuery(
+    getSearchParamsFilters(searchParams)
+  );
+
+  useEffect(() => {
+    return () => console.log("hi");
+  }, [searchParams]);
 
   useErrorHandling({
-    isError: !!dataDleted.isError || !!updateData.isError,
-    isSuccess: !!dataDleted.isSuccess || !!updateData.isSuccess,
+    isError: !!dataDleted.isError,
+    isSuccess: !!dataDleted.isSuccess,
   });
   const HandleDelete = (data: ILocation) => {
     setOpenDeleteDialg(data);
@@ -60,8 +69,15 @@ const Location: TLocationType = () => {
   };
 
   const HandleClose = () => {
+    console.log("HandleClose");
     setCreateDialogOpen(() => false);
     setUpdateDialogOpen(() => undefined);
+  };
+
+  const onChangeParams = (page: number) => {
+    setCurrentPage(() => page);
+    setSearchPrams((search) => ({ ...search, page: page }));
+    refetch();
   };
 
   if (isLoading) return <LinearProgress />;
@@ -78,7 +94,7 @@ const Location: TLocationType = () => {
         title="لیست آدرس ها"
         columns={columns}
         rows={data?.content || []}
-        count={data?.count|| 10}
+        count={data?.count || 10}
         dataKey="id"
         isDelete={true}
         isEdit={true}
@@ -87,6 +103,9 @@ const Location: TLocationType = () => {
         createLabel="افزودن آدرس جدید"
         isCreateButton={true}
         handleCreateButton={HandleCreateButton}
+        currentPage={currentPage}
+        handleChangePage={onChangeParams}
+        totalPage={data?.count}
       />
       <ConfirmModal
         open={!!openDeleteDialg}

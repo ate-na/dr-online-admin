@@ -4,7 +4,7 @@ import { APP_HEADER_MENU_ITEMS } from "./index.constant";
 import { Link } from "react-router-dom";
 import FlexBox from "../FlexBox";
 import { Logout } from "@mui/icons-material";
-import useAuth from "../../../hooks/authenticatedUser";
+import useAuth from "../../../hooks/useAuth";
 
 const Header: THeaderType = () => {
   const authCtx = useAuth();

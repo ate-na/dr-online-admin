@@ -9,8 +9,8 @@ interface IColumns {
 interface ITableProps<T> {
   isEdit?: boolean;
   isDelete?: boolean;
-  handleDelete?: (data: Record<string, any>) => void;
-  handleEdit?: (data: Record<string, any>) => void;
+  handleDelete?: (data: T) => void;
+  handleEdit?: (data: T) => void;
   columns: IColumns[];
   rows: T[];
   dataKey: string;
@@ -20,6 +20,9 @@ interface ITableProps<T> {
   createLabel?: string;
   loading?: boolean;
   count?: number;
+  currentPage?: number;
+  totalPage?: number;
+  handleChangePage: (page: number) => void;
 }
 
 export type TTable<T> = FC<ITableProps<T>>;

@@ -5,10 +5,13 @@ import TextField from "../../../components/kits/TextField";
 import Modal from "../../../components/kits/Modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { locationFormValidation } from "./index.constants";
-import useCities from "../../../hooks/cities";
-import { useCreateLocationMutation } from "../../../api/location";
+import useCities from "../../../hooks/useCities";
+import {
+  useCreateLocationMutation,
+  useUpdateLocationMutation,
+} from "../../../api/location";
 import Button from "../../../components/kits/Button";
-import useErrorHandling from "../../../hooks/test";
+import useErrorHandling from "../../../hooks/useErrorHandling";
 
 const CreateLocation: TCreateLocation = ({
   open = false,
@@ -16,27 +19,45 @@ const CreateLocation: TCreateLocation = ({
   data,
 }) => {
   const { cities, cityLoading } = useCities();
+  console.log("data", data);
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(locationFormValidation),
     values: { ...data },
   });
 
   const [submit, createSubmitData] = useCreateLocationMutation();
+  const [handleSubmitUpdateHandler, updateData] = useUpdateLocationMutation();
 
-  useErrorHandling(createSubmitData);
+  console.log(
+    "check value",
+    {
+      isError: createSubmitData.isError || updateData.isError,
+      isSuccess: createSubmitData.isSuccess || updateData.isSuccess,
+    },
+    createSubmitData.isSuccess,
+    updateData.isSuccess
+  );
+
+  useErrorHandling({
+    isError: createSubmitData.isError || updateData.isError,
+    isSuccess: createSubmitData.isSuccess || updateData.isSuccess,
+  });
 
   const onSubmit = handleSubmit(
     async (value: any) => {
-      if(data && data.id){
-
-      }else{}
-      await submit(value);
+      if (data && data.id) {
+        await handleSubmitUpdateHandler({ ...value, id: data?.id });
+        reset();
+      } else {
+        await submit(value);
+        reset();
+      }
+      handleClose();
     },
     (err) => {
       console.log(err);
     }
   );
-
 
   return (
     <Modal

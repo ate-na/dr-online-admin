@@ -4,14 +4,14 @@ import {
   TCreateOrUpdateResponse,
 } from "../types/location.model";
 import { Api } from "./base";
-import { provideTags, provideTagsType } from "./index.constant";
+import { provideTagsType } from "./index.constant";
 
 const locationApi = Api.injectEndpoints({
   endpoints: (build) => ({
-    getLocations: build.query<TLocationPageRes, void>({
-      query: () => {
+    getLocations: build.query<TLocationPageRes, any>({
+      query: (query) => {
         return {
-          url: "/locations",
+          url: `/locations?${query}`,
           method: "GET",
         };
       },
@@ -37,7 +37,7 @@ const locationApi = Api.injectEndpoints({
       query: (arg) => {
         return {
           url: `/locations/${arg?.id}`,
-          method: "POST",
+          method: "PATCH",
           body: arg,
         };
       },
@@ -59,5 +59,5 @@ export const {
   useGetLocationsQuery,
   useCreateLocationMutation,
   useDeleteLocationMutation,
-  useUpdateLocationMutation
+  useUpdateLocationMutation,
 } = locationApi;

@@ -12,7 +12,7 @@ import { useLoginStyles } from "./index.style";
 import { loginFormValidation } from "./index.constant";
 import { TLoginFC } from "./index.type";
 import FlexBox from "../../components/kits/FlexBox";
-import useAuth from "../../hooks/authenticatedUser";
+import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 
 const Login: TLoginFC = () => {
@@ -26,7 +26,7 @@ const Login: TLoginFC = () => {
   const onSubmit = handleSubmit((data) => {
     console.log("onsubmit called", data);
     AuthCtx.Login(data as any);
-    toast.success('')
+    toast.success("");
   });
 
   return (
