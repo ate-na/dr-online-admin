@@ -19,7 +19,7 @@ const RoutesNavigation = () => {
             <Route path="/" element={<Admin />} />
             <Route path="/therapists" element={<Therapists />} />
             <Route path="/locations" element={<Location />} />
-            <Route path="/category" element={<Categories />} />
+            <Route path="/categories" element={<Categories />} />
           </Routes>
         </Layout>
       )}

@@ -82,6 +82,9 @@ const Location: TLocationType = () => {
 
   if (isLoading) return <LinearProgress />;
 
+  {
+    console.log("updateDialogOpen", updateDialogOpen);
+  }
   return (
     <>
       <CreateLocation

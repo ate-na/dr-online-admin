@@ -12,6 +12,7 @@ import {
 } from "../../../api/location";
 import Button from "../../../components/kits/Button";
 import useErrorHandling from "../../../hooks/useErrorHandling";
+import { useEffect } from "react";
 
 const CreateLocation: TCreateLocation = ({
   open = false,
@@ -19,24 +20,21 @@ const CreateLocation: TCreateLocation = ({
   data,
 }) => {
   const { cities, cityLoading } = useCities();
-  console.log("data", data);
-  const { control, handleSubmit, reset } = useForm({
+  console.log(" the data", { ...data });
+  const { control, handleSubmit, reset, setValue } = useForm({
     resolver: zodResolver(locationFormValidation),
-    values: { ...data },
   });
 
   const [submit, createSubmitData] = useCreateLocationMutation();
   const [handleSubmitUpdateHandler, updateData] = useUpdateLocationMutation();
 
-  console.log(
-    "check value",
-    {
-      isError: createSubmitData.isError || updateData.isError,
-      isSuccess: createSubmitData.isSuccess || updateData.isSuccess,
-    },
-    createSubmitData.isSuccess,
-    updateData.isSuccess
-  );
+  useEffect(() => {
+    if (data) {
+      setValue("address", data.address);
+      setValue("city", data.city);
+    }
+    console.log("dataaaa is", data);
+  }, [data]);
 
   useErrorHandling({
     isError: createSubmitData.isError || updateData.isError,
@@ -45,13 +43,13 @@ const CreateLocation: TCreateLocation = ({
 
   const onSubmit = handleSubmit(
     async (value: any) => {
+      console.log("value is", value);
       if (data && data.id) {
         await handleSubmitUpdateHandler({ ...value, id: data?.id });
-        reset();
       } else {
         await submit(value);
-        reset();
       }
+      await reset();
       handleClose();
     },
     (err) => {

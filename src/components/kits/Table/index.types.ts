@@ -1,9 +1,10 @@
 import { FC } from "react";
 
-interface IColumns {
+export interface IColumns {
   label: string;
   name: string;
   width?: number;
+  isImage?: boolean;
 }
 
 interface ITableProps<T> {
@@ -22,7 +23,7 @@ interface ITableProps<T> {
   count?: number;
   currentPage?: number;
   totalPage?: number;
-  handleChangePage: (page: number) => void;
+  handleChangePage?: (page: number) => void;
 }
 
 export type TTable<T> = FC<ITableProps<T>>;

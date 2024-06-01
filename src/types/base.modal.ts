@@ -17,4 +17,8 @@ export interface IDatasourcePageRes<T> {
   count: number;
 }
 
+export interface ILocatioQuery {
+  page?: number;
+}
+
 export type TProvideTags = "locations";

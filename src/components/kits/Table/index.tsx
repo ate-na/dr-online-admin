@@ -33,6 +33,9 @@ const Table: TTable<any> = ({
     totalPage % 10 > 5 || totalPage % 10 === 0
       ? Math.round(totalPage / 10)
       : Math.round(totalPage / 10) + 1;
+
+  const env = import.meta.env.BASE_URL;
+  console.log("the env is");
   return (
     <>
       <FlexBox justifyContent="space-between" mb={2}>
@@ -59,7 +62,17 @@ const Table: TTable<any> = ({
             return (
               <TableRow key={e?.[dataKey]}>
                 {columns.map((el) => (
-                  <TableCell component={"td"}>{e?.[el.label]}</TableCell>
+                  <TableCell component={"td"}>
+                    {el.isImage ? (
+                      <img
+                        src={
+                          import.meta.env.BASE_URL + "upload/" + e?.[el.label]
+                        }
+                      />
+                    ) : (
+                      e?.[el.label]
+                    )}
+                  </TableCell>
                 ))}
                 <TableCell component={"td"}>
                   <FlexBox gap={2}>
