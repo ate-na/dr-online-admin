@@ -6,7 +6,6 @@ export const Api = createApi({
   tagTypes: provideTags,
   baseQuery: fetchBaseQuery({
     baseUrl: "https://pyschologist-api.liara.run/",
-
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {

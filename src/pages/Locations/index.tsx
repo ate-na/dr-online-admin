@@ -34,10 +34,6 @@ const Location: TLocationType = () => {
     getSearchParamsFilters(searchParams)
   );
 
-  useEffect(() => {
-    return () => console.log("hi");
-  }, [searchParams]);
-
   useErrorHandling({
     isError: !!dataDleted.isError,
     isSuccess: !!dataDleted.isSuccess,

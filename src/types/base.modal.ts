@@ -1,5 +1,5 @@
-export interface BaseEntity {
-  id: string;
+export interface IBaseEntity {
+  id: number;
 }
 
 export interface IBaseUser {
@@ -22,3 +22,9 @@ export interface ILocatioQuery {
 }
 
 export type TProvideTags = "locations";
+
+export interface IError {
+  error: string;
+  message: string;
+  statusCode: number;
+}

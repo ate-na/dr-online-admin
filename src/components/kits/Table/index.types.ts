@@ -7,6 +7,12 @@ export interface IColumns {
   isImage?: boolean;
 }
 
+export interface AdditionalActions {
+  name: string;
+  label: string;
+  handleClick: () => void;
+}
+
 interface ITableProps<T> {
   isEdit?: boolean;
   isDelete?: boolean;
@@ -24,6 +30,7 @@ interface ITableProps<T> {
   currentPage?: number;
   totalPage?: number;
   handleChangePage?: (page: number) => void;
+  additionalActions?: AdditionalActions[];
 }
 
 export type TTable<T> = FC<ITableProps<T>>;

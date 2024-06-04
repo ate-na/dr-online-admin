@@ -1,6 +1,8 @@
 export enum provideTagsType {
-    location = "location",
-  }
-export const provideTags: provideTagsType[] = [provideTagsType.location];
-
-
+  location = "location",
+  category = "category",
+}
+export const provideTags: provideTagsType[] = [
+  provideTagsType.location,
+  provideTagsType.category,
+];

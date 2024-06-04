@@ -10,6 +10,7 @@ const TextField: TTextFieldFC = ({
   control,
   rows = 1,
   multiline = false,
+  type='text',
 }) => {
   return (
     <Controller
@@ -21,6 +22,7 @@ const TextField: TTextFieldFC = ({
           <MuiTextField
             fullWidth
             error={!!error}
+            type={type}
             {...field}
             label={label}
             helperText={error || helperText}

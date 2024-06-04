@@ -8,6 +8,7 @@ import {
   Typography,
   LinearProgress,
   Pagination,
+  ButtonGroup,
 } from "@mui/material";
 import { TTable } from "./index.types";
 import FlexBox from "../FlexBox";
@@ -28,14 +29,13 @@ const Table: TTable<any> = ({
   handleChangePage,
   currentPage,
   totalPage = 10,
+  additionalActions,
 }) => {
   const pages =
     totalPage % 10 > 5 || totalPage % 10 === 0
       ? Math.round(totalPage / 10)
       : Math.round(totalPage / 10) + 1;
 
-  const env = import.meta.env.BASE_URL;
-  console.log("the env is");
   return (
     <>
       <FlexBox justifyContent="space-between" mb={2}>
@@ -43,6 +43,13 @@ const Table: TTable<any> = ({
         <FlexBox justifyContent="flex-end">
           {isCreateButton && (
             <Button onClick={handleCreateButton}>{createLabel}</Button>
+          )}
+          {!!additionalActions && additionalActions?.length > 0 && (
+            <ButtonGroup variant="contained" aria-label="Basic button group">
+              {additionalActions?.map((e) => (
+                <Button onClick={e.handleClick}>{e.name}</Button>
+              ))}
+            </ButtonGroup>
           )}
         </FlexBox>
       </FlexBox>
@@ -63,14 +70,20 @@ const Table: TTable<any> = ({
               <TableRow key={e?.[dataKey]}>
                 {columns.map((el) => (
                   <TableCell component={"td"}>
-                    {el.isImage ? (
+                    {el.isImage && e?.[el.label] ? (
                       <img
+                        style={{ width: "3rem" }}
                         src={
-                          import.meta.env.BASE_URL + "upload/" + e?.[el.label]
+                          "https://pyschologist-api.liara.run/upload/" +
+                          e?.[el.label]
                         }
                       />
-                    ) : (
+                    ) : e?.[el.label] ? (
                       e?.[el.label]
+                    ) : el.isImage ? (
+                      "no icon"
+                    ) : (
+                      "no data"
                     )}
                   </TableCell>
                 ))}
@@ -101,7 +114,7 @@ const Table: TTable<any> = ({
           color="secondary"
           page={currentPage}
           count={pages}
-          onChange={(_, page: number) => handleChangePage(page)}
+          onChange={handleChangePage ?(_, page: number) => handleChangePage(page) : ()=>{}}
         />
       </FlexBox>
       {loading && <LinearProgress />}

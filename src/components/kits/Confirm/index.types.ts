@@ -8,6 +8,7 @@ interface IConfirmProps {
   cancelTitle: string;
   agreeHandler: () => void;
   cancelHandler: () => void;
+  loading?: boolean;
 }
 
 export type TConfirm = FC<IConfirmProps>;

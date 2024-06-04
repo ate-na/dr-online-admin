@@ -11,6 +11,7 @@ const ConfirmModal: TConfirm = ({
   title,
   agreeHandler,
   cancelHandler,
+  loading,
 }) => {
   console.log("modal", open);
   return (
@@ -26,7 +27,7 @@ const ConfirmModal: TConfirm = ({
         <Button fullWidth onClick={cancelHandler} size="small">
           {cancelTitle}
         </Button>
-        <Button fullWidth onClick={agreeHandler} size="small">
+        <Button fullWidth loading={loading} onClick={agreeHandler} size="small">
           {agreeTitle}
         </Button>
       </DialogActions>

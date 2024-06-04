@@ -1,6 +1,6 @@
-import { BaseEntity, IBaseUser } from "./base.modal";
+import { IBaseEntity, IBaseUser } from "./base.modal";
 
-export interface IAdmin extends IBaseUser, BaseEntity {
+export interface IAdmin extends IBaseUser, IBaseEntity {
   isActive: boolean;
   password: string;
 }
@@ -15,8 +15,7 @@ export interface IResLogin {
   token: string;
 }
 
-
-export interface ILoginProps{
-    phone:string,
-    password:string
+export interface ILoginProps {
+  phone: string;
+  password: string;
 }
