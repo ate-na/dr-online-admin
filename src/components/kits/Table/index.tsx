@@ -28,11 +28,10 @@ const Table: TTable<any> = ({
   handleCreateButton,
   createLabel,
   loading,
-  // handleChangePage,
-  // currentPage,
+  handleFilter,
+  handleResetFilter,
   refetch,
   totalPage = 10,
-  additionalActions,
   additionalButtons,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -49,7 +48,8 @@ const Table: TTable<any> = ({
     setSearchPrams((search) => ({ ...search, page: page }));
     refetch();
   };
-  const prepareTabelCellData = (el: IColumns, value: any) => {
+  const prepareTabelCellData = (el: IColumns, values: any) => {
+    const value = values?.[el?.label];
     if (el.isImage && value)
       return (
         <img
@@ -60,6 +60,7 @@ const Table: TTable<any> = ({
     else if (el.isImage && !value) return "no image";
     else if (typeof value === "boolean")
       return value ? el.onLabel : el.offLable;
+    else if (el.transform) return el.transform(values);
     else if (!value) return "no data";
     else return value;
   };
@@ -68,14 +69,14 @@ const Table: TTable<any> = ({
       <FlexBox justifyContent="space-between" mb={2}>
         <Typography width={"100%"}>{title}</Typography>
         <FlexBox justifyContent="flex-end">
-          {isCreateButton && (
+          {isCreateButton && !handleFilter && !handleResetFilter && (
             <Button onClick={handleCreateButton}>{createLabel}</Button>
           )}
-          {!!additionalActions && additionalActions?.length > 0 && (
+          {isCreateButton && handleFilter && handleResetFilter && (
             <ButtonGroup variant="contained" aria-label="Basic button group">
-              {additionalActions?.map((e) => (
-                <Button onClick={e.handleClick}>{e.name}</Button>
-              ))}
+              <Button onClick={handleCreateButton}>{createLabel}</Button>
+              <Button onClick={handleFilter}>{"فیلتر جدول"}</Button>
+              <Button onClick={handleResetFilter}>{"پاک کردن فیلترها"}</Button>
             </ButtonGroup>
           )}
         </FlexBox>
@@ -101,7 +102,7 @@ const Table: TTable<any> = ({
               <TableRow key={e?.[dataKey]}>
                 {columns.map((el) => (
                   <TableCell sx={{ textAlign: "center" }} component={"td"}>
-                    {prepareTabelCellData(el, e?.[el?.label])}
+                    {prepareTabelCellData(el, e)}
                   </TableCell>
                 ))}
                 <TableCell sx={{ textAlign: "center" }} component={"td"}>

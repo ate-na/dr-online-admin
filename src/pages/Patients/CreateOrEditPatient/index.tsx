@@ -11,11 +11,10 @@ import {
   useCreatePatientMutation,
   useUpdatePatientMutation,
 } from "../../../api/patients";
-import toast from "react-hot-toast";
 import useErrorHandling from "../../../hooks/useErrorHandling";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { IError } from "../../../types/base.modal";
-import { patientFormValidations } from "./../index.constants";
+import { x } from "./../index.constants";
 
 const CreateOrEditPatient: TCreateOrEditPatient = ({
   open = false,
@@ -24,7 +23,7 @@ const CreateOrEditPatient: TCreateOrEditPatient = ({
 }) => {
   const { control, handleSubmit, reset } = useForm<TCreateOrEditFormValidation>(
     {
-      resolver: zodResolver(patientFormValidations),
+      resolver: zodResolver(x),
       values: { ...data } as any,
     }
   );

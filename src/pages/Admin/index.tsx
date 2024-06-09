@@ -85,29 +85,17 @@ const Admin: TAdmin = () => {
         loading={isLoading}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        isCreateButton={true}
+        createLabel="ساخت ادمین جدید"
+        handleCreateButton={handleCreateButton}
+        handleResetFilter={clearFilterHandler}
+        handleFilter={filterHandler}
         additionalButtons={[
           {
             name: "ویرایش پسوورد",
             label: "ویرایش پسوورد",
             handleClick: changePasswordHandler,
             color: "secondary",
-          },
-        ]}
-        additionalActions={[
-          {
-            handleClick: handleCreateButton,
-            label: "ساخت ادمین جدید",
-            name: "ساخت ادمین جدید",
-          },
-          {
-            handleClick: clearFilterHandler,
-            label: "پاک کردن فیلترها",
-            name: "پاک کردن فیلترها",
-          },
-          {
-            handleClick: filterHandler,
-            label: "فیلتر جدول",
-            name: "فیلتر جدول",
           },
         ]}
         title="ادمین ها"

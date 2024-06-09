@@ -26,7 +26,6 @@ const Categories: TCategoryType = () => {
   const [updateCreateForm, setUpdateCreateForm] = useState<ICategory>();
   const [openFilterDialg, setOpenFilterDialog] = useState<boolean>(false);
   const [_, setSearchParams] = useSearchParams();
-  
 
   useErrorHandling({
     isError: deleteData.isError,
@@ -93,23 +92,11 @@ const Categories: TCategoryType = () => {
         refetch={refetch}
         handleEdit={handleEdit}
         handleDelete={HandleDelete}
-        additionalActions={[
-          {
-            name: "پاک کردن فیلترها",
-            label: "پاک کردن فیلترها",
-            handleClick: clearFilterHandler,
-          },
-          {
-            name: "فیلتر جدول",
-            label: "فیلتر جدول",
-            handleClick: filterTableHandler,
-          },
-          {
-            name: "افزودن زمینه تخصصی",
-            label: "افزودن زمینه تخصصی",
-            handleClick: addNewCategoryHandler,
-          },
-        ]}
+        isCreateButton={true}
+        createLabel="افزودن زمینه تخصصی"
+        handleCreateButton={addNewCategoryHandler}
+        handleFilter={filterTableHandler}
+        handleResetFilter={clearFilterHandler}
       />
       <CreateCategory
         handleClose={handleCloseCreateForm}

@@ -8,6 +8,7 @@ export interface IColumns {
   isImage?: boolean;
   offLable?: string;
   onLabel?: string;
+  transform?: (data: any) => any;
 }
 
 export interface AdditionalActions {
@@ -31,12 +32,11 @@ interface ITableProps<T> {
   createLabel?: string;
   loading?: boolean;
   count?: number;
-  currentPage?: number;
   totalPage?: number;
-  handleChangePage?: (page: number) => void;
-  additionalActions?: AdditionalActions[];
   additionalButtons?: AdditionalActions[];
   refetch: () => void;
+  handleFilter?: () => void;
+  handleResetFilter?: () => void;
 }
 
 export type TTable<T> = FC<ITableProps<T>>;

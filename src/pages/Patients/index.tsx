@@ -87,29 +87,17 @@ const Patient: TPatient = () => {
         loading={isLoading}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        isCreateButton={true}
+        createLabel="ایجاد بیمار جدید"
+        handleCreateButton={handleCreateButton}
+        handleFilter={filterHandler}
+        handleResetFilter={clearFilterHandler}
         additionalButtons={[
           {
             name: "ویرایش پسوورد",
             label: "ویرایش پسوورد",
             handleClick: changePasswordHandler,
             color: "secondary",
-          },
-        ]}
-        additionalActions={[
-          {
-            handleClick: handleCreateButton,
-            label: "ایجاد بیمار جدید",
-            name: "ایجاد بیمار جدید",
-          },
-          {
-            handleClick: clearFilterHandler,
-            label: "پاک کردن فیلترها",
-            name: "پاک کردن فیلترها",
-          },
-          {
-            handleClick: filterHandler,
-            label: "فیلتر جدول",
-            name: "فیلتر جدول",
           },
         ]}
         title="بیماران"

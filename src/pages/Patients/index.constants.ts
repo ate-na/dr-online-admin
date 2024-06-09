@@ -8,7 +8,7 @@ export const PatientColumns: IColumns[] = [
   // { label: "phone", name: "شماره تماس" },
 ];
 
-export const patientFormValidations = zod.object({
+export const x = zod.object({
   firstName: zod
     .string({ message: "نام بیمار باید حداقل 3 حرف داشته باشد" })
     .min(3),
