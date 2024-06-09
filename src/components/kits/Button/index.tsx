@@ -20,9 +20,10 @@ const Button: TButton = ({
       loadingSpinnerSize
       {...attributeProps}
       disabled={attributeProps.disabled || loading}
-
     >
-        {loading && <CircularProgress sx={{marginInlineEnd:'8px'}} size={20} />}
+      {loading && (
+        <CircularProgress sx={{ marginInlineEnd: "8px" }} size={20} />
+      )}
       {children}
     </MuiButton>
   );

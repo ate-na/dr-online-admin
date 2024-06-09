@@ -1,16 +1,20 @@
 import { FC } from "react";
+import { TButtonColor } from "../Button/index.types";
 
 export interface IColumns {
   label: string;
   name: string;
   width?: number;
   isImage?: boolean;
+  offLable?: string;
+  onLabel?: string;
 }
 
 export interface AdditionalActions {
   name: string;
   label: string;
-  handleClick: () => void;
+  handleClick: (data?: any) => void;
+  color?: TButtonColor;
 }
 
 interface ITableProps<T> {
@@ -31,7 +35,8 @@ interface ITableProps<T> {
   totalPage?: number;
   handleChangePage?: (page: number) => void;
   additionalActions?: AdditionalActions[];
-  refetch:()=>void
+  additionalButtons?: AdditionalActions[];
+  refetch: () => void;
 }
 
 export type TTable<T> = FC<ITableProps<T>>;

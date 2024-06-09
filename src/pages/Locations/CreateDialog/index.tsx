@@ -22,7 +22,9 @@ const CreateLocation: TCreateLocation = ({
 }) => {
   const { cities, cityLoading } = useCities();
   console.log(" the data", { ...data });
-  const { control, handleSubmit, reset, setValue } = useForm<Partial<ILocation>>({
+  const { control, handleSubmit, reset, setValue } = useForm<
+    Partial<ILocation>
+  >({
     resolver: zodResolver(locationFormValidation),
   });
 
@@ -50,7 +52,7 @@ const CreateLocation: TCreateLocation = ({
       } else {
         await submit(value);
       }
-     reset();
+      reset();
       handleClose();
     },
     (err) => {
@@ -58,10 +60,10 @@ const CreateLocation: TCreateLocation = ({
     }
   );
 
-  const onCloseHanlder=()=>{
-    reset({address:undefined,id:undefined,city:undefined})
-    handleClose()
-  }
+  const onCloseHanlder = () => {
+    reset({ address: undefined, id: undefined, city: undefined });
+    handleClose();
+  };
 
   return (
     <Modal
@@ -89,7 +91,7 @@ const CreateLocation: TCreateLocation = ({
           disabled={cityLoading}
           control={control}
           name="city"
-          items={cities.map((e) => ({ value: e.id, label: e.name }))}
+          items={cities.map((e) => ({ value: e.name, label: e.name }))}
           selectLabel="شهر"
         />
         <TextField

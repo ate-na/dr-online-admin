@@ -54,16 +54,14 @@ const categoryApi = Api.injectEndpoints({
     }),
 
     updateCategory: build.mutation<void, Partial<ICategory>>({
-      query: (arg: Partial<ICategory>) => {
-        const formData = new FormData();
-        Object.keys(arg).map((e:string) => {
-          console.log(e, arg[e]);
-        });
+      query: (arg: ICategory) => {
         return {
-          url: "/categories",
+          url: `/categories/${arg.id}`,
           method: "PATCH",
+          body: arg,
         };
       },
+      invalidatesTags: [provideTagsType.category],
     }),
   }),
 });
@@ -73,5 +71,5 @@ export const {
   useCreateCategoryMutation,
   useUploadIconsMutation,
   useDeleteCategoryMutation,
-  useUpdateCategoryMutation
+  useUpdateCategoryMutation,
 } = categoryApi;

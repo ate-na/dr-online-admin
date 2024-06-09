@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { ILocation } from "../../../types/location.model";
+import { ICreateOrEditProps } from "../../../types/base.modal";
 
-interface ICreateLocationProps {
-  open: boolean;
-  handleClose: () => void;
-  data?:ILocation
-}
+interface ICreateLocationProps extends ICreateOrEditProps<ILocation> {}
 
 export type TCreateLocation = FC<ICreateLocationProps>;

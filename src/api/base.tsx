@@ -8,10 +8,17 @@ export const Api = createApi({
     baseUrl: "https://pyschologist-api.liara.run/",
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
+      console.log("token", token);
       if (token) {
-        headers.set("authentication", `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
+    },
+    validateStatus(response, body) {
+      if (response.status === 401) {
+        localStorage.clear();
+      }
+      return response.status === 200 || response.status === 201;
     },
   }),
   endpoints: (build) => ({}),

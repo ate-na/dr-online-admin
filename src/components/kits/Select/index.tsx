@@ -37,7 +37,9 @@ const Select: TSelect = ({
                 {...field}
               >
                 {items.map((element) => (
-                  <MenuItem key={element.label} value={element.label}>{element.label}</MenuItem>
+                  <MenuItem key={element.label} value={element.value}>
+                    {element.label}
+                  </MenuItem>
                 ))}
               </MuiSelect>
               <FormHelperText>{helperText || error}</FormHelperText>

@@ -28,3 +28,12 @@ export interface IError {
   message: string;
   statusCode: number;
 }
+
+export interface ICreateOrEditProps<T> extends IModalProps {
+  data?: T;
+}
+
+export interface IModalProps {
+  open?: boolean;
+  handleClose: () => void;
+}

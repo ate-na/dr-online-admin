@@ -27,10 +27,10 @@ export const prepareObjectSearchParamsFilters = <T extends URLSearchParams>(
     if (value && key && value !== "undefined" && key !== "page") {
       console.log("calleds", `${key}.eq=${value}`);
       query.push(`${key}.eq=${value}`);
-    }else if(key==='page'){
-      query.push(`${key}=${+value-1}`)
+    } else if (key === "page") {
+      query.push(`${key}=${+value - 1}`);
     }
   });
-  console.log("callled",query)
-  return query.join(",");
+  console.log("callled", query, query.join(","));
+  return query.join("&");
 };

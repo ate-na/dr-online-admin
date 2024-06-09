@@ -12,7 +12,7 @@ import {
 } from "../../../api/categories";
 import { Avatar, Box, IconButton } from "@mui/material";
 import { createAvatarStyle } from "./index.style";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ICategory } from "../../../types/category.modal";
 import useErrorHandling from "../../../hooks/useErrorHandling";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
@@ -24,7 +24,7 @@ const CreateCategory: TCreateCategory = ({
   data,
 }) => {
   console.log("data", data);
-  const { control, handleSubmit, reset, getValues } = useForm({
+  const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(createCategoryValidation),
     values: { ...data },
   });
@@ -69,6 +69,13 @@ const CreateCategory: TCreateCategory = ({
     }
   );
 
+  useEffect(() => {
+    if (data?.icon)
+      setImageSrc(
+        () => "https://pyschologist-api.liara.run/upload/" + data.icon
+      );
+  }, [data]);
+
   const closeModal = () => {
     reset({
       enName: undefined,
@@ -81,27 +88,21 @@ const CreateCategory: TCreateCategory = ({
   };
 
   const handleOnChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e?.target?.files && e?.target?.files.length > 0) {
+    if (e?.target?.files && e?.target?.files.length > 0)
       setImageSrc(() => URL.createObjectURL(e?.target?.files[0]));
-    }
+
     console.log(imageSrc);
   };
 
   useErrorHandling({
-    isError: submitData.isError,
-    isSuccess: submitData.isSuccess,
-    errorMessage: ((submitData.error as FetchBaseQueryError)?.data as IError)
-      ?.message,
+    isError: submitData.isError || updateData.isError,
+    isSuccess: submitData.isSuccess || updateData.isSuccess,
+    errorMessage:
+      ((submitData.error as FetchBaseQueryError)?.data as IError)?.message ||
+      ((updateData.error as FetchBaseQueryError)?.data as IError)?.message,
   });
-  console.log(
-    ((submitData.error as FetchBaseQueryError)?.data as IError)?.message
-  );
-  const { classes } = createAvatarStyle();
 
-  console.log(
-    "the loading is",
-    uploadIconData.isLoading || submitData.isLoading
-  );
+  const { classes } = createAvatarStyle();
 
   return (
     <Modal title="افزودن زمینه جدید" open={open} handleClose={closeModal}>
@@ -147,7 +148,11 @@ const CreateCategory: TCreateCategory = ({
         />
         <Button
           type="submit"
-          loading={uploadIconData.isLoading || submitData.isLoading}
+          loading={
+            uploadIconData.isLoading ||
+            submitData.isLoading ||
+            updateData.isLoading
+          }
         >
           اعمال تغییرات
         </Button>

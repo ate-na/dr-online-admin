@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface ISelectItems {
-  value: number | string;
+  value: number | string | boolean;
   label: string;
 }
 interface ISelectProps {
@@ -10,7 +10,7 @@ interface ISelectProps {
   helperText?: string;
   name: string;
   control: any;
-  disabled?:boolean,
-  defaultValue?:any
+  disabled?: boolean;
+  defaultValue?: any;
 }
 export type TSelect = FC<ISelectProps>;

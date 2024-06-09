@@ -22,8 +22,11 @@ export const AuthContextProvider: TAuthContextProvider = ({ children }) => {
   const [submit] = useLoginMutation();
 
   const Login = async (data: ILoginProps) => {
+    console.log("called login");
     const res = await submit(data);
+    console.log("res called login", res);
     if (res?.data?.user && res?.data?.token) {
+      console.log("hiii");
       setUser(() => res.data.user);
       setToken(() => res.data.token);
       localStorage.setItem("token", res.data.token);

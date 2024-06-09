@@ -10,7 +10,7 @@ export interface IAuthContext {
 }
 
 export interface ILoginData {
-  mobile: string;
+  phone: string;
   password: string;
 }
 

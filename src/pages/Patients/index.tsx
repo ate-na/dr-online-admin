@@ -1,31 +1,34 @@
 import { useState } from "react";
-import { useDeleteAdminMutation, useGetAllAdminQuery } from "../../api/admin";
 import Table from "../../components/kits/Table";
-import { TAdmin } from "./index.types";
-import { IAdmin } from "../../types/admin.modal";
+import { TPatient } from "./index.types";
 import ConfirmModal from "../../components/kits/Confirm";
 import useErrorHandling from "../../hooks/useErrorHandling";
 import { useSearchParams } from "react-router-dom";
 import useGetSearchParamsFilter from "../../hooks/useGetSearchParamsFilter";
 import ChangePasswordDialog from "../../components/ui/ChangePassword";
-import { Admincolumns } from "./index.constants";
-import CreateOrEditAdmin from "./CreateOrEditAdmin";
-import FilterAdminDialog from "./FilterAdmin";
+import { PatientColumns } from "./index.constants";
+import CreateOrEditAdmin from "./CreateOrEditPatient";
+import FilterAdminDialog from "./FilterPatient";
+import { IPatient } from "../../types/patient.modal";
+import {
+  useGetAllPatientQuery,
+  useDeletePatientMutation,
+} from "../../api/patients";
 
-const Admin: TAdmin = () => {
+const Patient: TPatient = () => {
   const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
   const [openFilterModal, setOpenFilterModal] = useState<boolean>(false);
   const [openChangePasswordDialog, setOpenChangePasswordDialog] =
-    useState<IAdmin>();
-  const [openEditModal, setOpenEditModal] = useState<IAdmin>();
-  const [openDelete, setOpenDelete] = useState<IAdmin>();
+    useState<IPatient>();
+  const [openEditModal, setOpenEditModal] = useState<IPatient>();
+  const [openDelete, setOpenDelete] = useState<IPatient>();
 
   const [_, setSearchParams] = useSearchParams();
 
-  const { data, isLoading, refetch } = useGetAllAdminQuery(
+  const { data, isLoading, refetch } = useGetAllPatientQuery(
     useGetSearchParamsFilter({ isObject: false })
   );
-  const [onDeleteSubmit, deletedData] = useDeleteAdminMutation();
+  const [onDeleteSubmit, deletedData] = useDeletePatientMutation();
 
   const handleCreateButton = () => {
     setOpenCreateModal(() => true);
@@ -46,10 +49,10 @@ const Admin: TAdmin = () => {
   const filterHandler = () => {
     setOpenFilterModal(() => true);
   };
-  const handleEdit = (data: IAdmin) => {
+  const handleEdit = (data: IPatient) => {
     setOpenEditModal(() => data);
   };
-  const handleDelete = (data: IAdmin) => {
+  const handleDelete = (data: IPatient) => {
     setOpenDelete(() => data);
   };
 
@@ -62,8 +65,7 @@ const Admin: TAdmin = () => {
     setOpenDelete(() => undefined);
   };
 
-  const changePasswordHandler = (data: IAdmin) => {
-    console.log("the admin is", data);
+  const changePasswordHandler = (data: IPatient) => {
     setOpenChangePasswordDialog(() => data);
   };
   const handleCloseChangePassword = () => {
@@ -96,8 +98,8 @@ const Admin: TAdmin = () => {
         additionalActions={[
           {
             handleClick: handleCreateButton,
-            label: "ساخت ادمین جدید",
-            name: "ساخت ادمین جدید",
+            label: "ایجاد بیمار جدید",
+            name: "ایجاد بیمار جدید",
           },
           {
             handleClick: clearFilterHandler,
@@ -110,9 +112,9 @@ const Admin: TAdmin = () => {
             name: "فیلتر جدول",
           },
         ]}
-        title="ادمین ها"
+        title="بیماران"
         isDelete={true}
-        columns={Admincolumns}
+        columns={PatientColumns}
         rows={data?.content || []}
         count={data?.count || 10}
         totalPage={data?.count || 10}
@@ -145,4 +147,4 @@ const Admin: TAdmin = () => {
   );
   // return <></>;
 };
-export default Admin;
+export default Patient;

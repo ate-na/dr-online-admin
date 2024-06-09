@@ -10,7 +10,7 @@ import {
   Pagination,
   ButtonGroup,
 } from "@mui/material";
-import { TTable } from "./index.types";
+import { AdditionalActions, IColumns, TTable } from "./index.types";
 import FlexBox from "../FlexBox";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -33,11 +33,11 @@ const Table: TTable<any> = ({
   refetch,
   totalPage = 10,
   additionalActions,
+  additionalButtons,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const [_, setSearchPrams] = useSearchParams();
-
 
   const pages =
     totalPage % 10 > 5 || totalPage % 10 === 0
@@ -49,7 +49,20 @@ const Table: TTable<any> = ({
     setSearchPrams((search) => ({ ...search, page: page }));
     refetch();
   };
-  // console.log("pagesss", pages, totalPage);
+  const prepareTabelCellData = (el: IColumns, value: any) => {
+    if (el.isImage && value)
+      return (
+        <img
+          style={{ width: "4rem" }}
+          src={"https://pyschologist-api.liara.run/upload/" + value}
+        />
+      );
+    else if (el.isImage && !value) return "no image";
+    else if (typeof value === "boolean")
+      return value ? el.onLabel : el.offLable;
+    else if (!value) return "no data";
+    else return value;
+  };
   return (
     <>
       <FlexBox justifyContent="space-between" mb={2}>
@@ -71,7 +84,11 @@ const Table: TTable<any> = ({
         <TableHead>
           <TableRow>
             {columns.map((element) => (
-              <TableCell key={element.label} component={"th"}>
+              <TableCell
+                sx={{ textAlign: "center" }}
+                key={element.label}
+                component={"th"}
+              >
                 {element.name}
               </TableCell>
             ))}
@@ -83,26 +100,12 @@ const Table: TTable<any> = ({
             return (
               <TableRow key={e?.[dataKey]}>
                 {columns.map((el) => (
-                  <TableCell component={"td"}>
-                    {el.isImage && e?.[el.label] ? (
-                      <img
-                        style={{ width: "3rem" }}
-                        src={
-                          "https://pyschologist-api.liara.run/upload/" +
-                          e?.[el.label]
-                        }
-                      />
-                    ) : e?.[el.label] ? (
-                      e?.[el.label]
-                    ) : el.isImage ? (
-                      "no icon"
-                    ) : (
-                      "no data"
-                    )}
+                  <TableCell sx={{ textAlign: "center" }} component={"td"}>
+                    {prepareTabelCellData(el, e?.[el?.label])}
                   </TableCell>
                 ))}
-                <TableCell component={"td"}>
-                  <FlexBox gap={2}>
+                <TableCell sx={{ textAlign: "center" }} component={"td"}>
+                  <FlexBox gap={2} justifyContent={"center"}>
                     {isDelete && (
                       <Button
                         onClick={handleDelete?.bind(null, e)}
@@ -116,6 +119,16 @@ const Table: TTable<any> = ({
                         ویرایش
                       </Button>
                     )}
+                    {additionalButtons &&
+                      additionalButtons.length > 0 &&
+                      additionalButtons.map((el: AdditionalActions) => (
+                        <Button
+                          color={el.color || "primary"}
+                          onClick={() => el.handleClick(e)}
+                        >
+                          {el.name}
+                        </Button>
+                      ))}
                   </FlexBox>
                 </TableCell>
               </TableRow>

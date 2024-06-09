@@ -1,9 +1,11 @@
 import { IBaseEntity, IBaseUser } from "./base.modal";
 
 export interface IAdmin extends IBaseUser, IBaseEntity {
-  isActive: boolean;
-  password: string;
+  isActive?: boolean;
+  password?: string;
 }
+
+export type TAdminPageRes = IDatasourcePageRes<IAdmin>;
 
 export interface IDatasourcePageRes<IEntity> {
   content: IEntity[];

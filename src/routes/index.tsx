@@ -7,6 +7,7 @@ import { useContext } from "react";
 import AuthContext from "../context";
 import Admin from "../pages/Admin";
 import Categories from "../pages/Categories";
+import Patient from "../pages/Patients";
 
 const RoutesNavigation = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -20,6 +21,8 @@ const RoutesNavigation = () => {
             <Route path="/therapists" element={<Therapists />} />
             <Route path="/locations" element={<Location />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/admins" element={<Admin />} />
+            <Route path="patients" element={<Patient />} />
           </Routes>
         </Layout>
       )}
