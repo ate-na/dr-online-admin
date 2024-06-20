@@ -10,6 +10,14 @@ export enum EDegtreeOfEducation {
   doctorate = "doctorate",
 }
 
+export const EDegtreeOfEducationItems = [
+  { value: EDegtreeOfEducation.associate, label: "فوق دیپلم" },
+  { value: EDegtreeOfEducation.diploma, label: "دیپلم" },
+  { value: EDegtreeOfEducation.bachelor, label: "کارشناسی" },
+  { value: EDegtreeOfEducation.master, label: "ارشد" },
+  { value: EDegtreeOfEducation.doctorate, label: "دکترا" },
+];
+
 export enum ETherapistScheduleType {
   online = "online",
   onsite = "onsite",
@@ -21,6 +29,12 @@ export enum EGender {
   female = "female",
   unknown = "unknown",
 }
+
+export const GenderItems = [
+  { value: EGender.unknown, label: "نامشخصی" },
+  { value: EGender.female, label: "زن" },
+  { value: EGender.male, label: "مرد" },
+];
 
 export type TTherapistsPageRes = IDatasourcePageRes<ITherapist>;
 

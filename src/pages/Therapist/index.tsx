@@ -6,6 +6,7 @@ import { TherapistColumns } from "./index.constant";
 import { TTherapistFC } from "./index.types";
 import { ITherapist } from "../../types/therapist.modal";
 import { useSearchParams } from "react-router-dom";
+import CreateOrEdit from "./CreateOrEdit";
 
 const Therapists: TTherapistFC = () => {
   const { data, refetch } = useGetAllTherapistQuery(
@@ -61,6 +62,10 @@ const Therapists: TTherapistFC = () => {
         handleEdit={openEditDialogHandler}
         isDelete={true}
         handleDelete={openDeleteDialogHandler}
+      />
+      <CreateOrEdit
+        open={openCreateDialog}
+        handleClose={onCloseOpenOrEditDialog}
       />
     </>
   );
