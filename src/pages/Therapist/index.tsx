@@ -7,6 +7,7 @@ import { TTherapistFC } from "./index.types";
 import { ITherapist } from "../../types/therapist.modal";
 import { useSearchParams } from "react-router-dom";
 import CreateOrEdit from "./CreateOrEdit";
+import FilterTherapist from "./Filter";
 
 const Therapists: TTherapistFC = () => {
   const { data, refetch } = useGetAllTherapistQuery(
@@ -19,6 +20,8 @@ const Therapists: TTherapistFC = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState<ITherapist>();
   const [openEditDialog, setOpenEditDialog] = useState<ITherapist>();
   const [openFilterDialog, setOpenFilterDialog] = useState<boolean>();
+
+
 
   const openCreateDialogHandler = () => {
     setOpenCreateDialog(() => true);
@@ -66,6 +69,10 @@ const Therapists: TTherapistFC = () => {
       <CreateOrEdit
         open={openCreateDialog}
         handleClose={onCloseOpenOrEditDialog}
+      />
+      <FilterTherapist
+        open={openFilterDialog}
+        handleClose={closeFilterDialogHandler}
       />
     </>
   );

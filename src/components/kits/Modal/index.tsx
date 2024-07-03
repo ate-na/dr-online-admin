@@ -16,7 +16,7 @@ const Modal: TModal = ({
   gap = 2,
 }) => {
   return (
-    <MuiModal open={open} onClose={handleClose}>
+    <MuiModal  open={open} onClose={handleClose}>
       <FlexBox>
         <FlexBox
           flexDirection={flexDirection}
@@ -26,6 +26,7 @@ const Modal: TModal = ({
           width={width}
           height={height}
           borderRadius={2}
+        
         >
           <FlexBox justifyContent="space-between" height={"20%"}>
             <Typography variant="h5" component={"h2"}>

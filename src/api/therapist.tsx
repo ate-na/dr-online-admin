@@ -9,7 +9,7 @@ const TherapistApi = Api.injectEndpoints({
     getAllTherapist: build.query<TTherapistsPageRes, string>({
       query: (arg) => {
         return {
-          url: `/therapist${arg ? `/${arg}` : ""}`,
+          url: `/therapist${arg ? `?${arg}` : ""}`,
           method: "GET",
         };
       },
