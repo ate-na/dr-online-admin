@@ -13,6 +13,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdOutlineCategory } from "react-icons/md";
 import { Avatar, Chip } from "@mui/material";
 import { MdDisplaySettings } from "react-icons/md";
+import { Typography } from "@mui/material";
 
 const DetailModal: TDetailTherapistModal = ({
   open = false,
@@ -34,7 +35,9 @@ const DetailModal: TDetailTherapistModal = ({
           justifyContent="flex-start"
         >
           <MdPerson size={20} />
-          نام و نام خانوادگی پزشک : {`${data?.firstName} ${data?.lastName}`}
+          <Typography>
+            نام و نام خانوادگی پزشک : {`${data?.firstName} ${data?.lastName}`}
+          </Typography>
         </FlexBox>
         <FlexBox
           gap={0.5}
@@ -43,7 +46,9 @@ const DetailModal: TDetailTherapistModal = ({
           justifyContent="flex-start"
         >
           <FaPhoneAlt size={17} />
-          شماره تماس های پزشک : {`${data?.phone}-${data?.phone2}`}
+          <Typography>
+            شماره تماس های پزشک : {`${data?.phone}-${data?.phone2}`}
+          </Typography>
         </FlexBox>
         <FlexBox
           gap={0.5}
@@ -61,7 +66,9 @@ const DetailModal: TDetailTherapistModal = ({
           justifyContent="flex-start"
         >
           <MdWorkspacePremium size={20} />
-          مدرک تحصیلی: {getDegreeEnum(data?.degreeOfEducation)}
+          <Typography>
+            مدرک تحصیلی: {getDegreeEnum(data?.degreeOfEducation)}
+          </Typography>
         </FlexBox>
         <FlexBox
           gap={0.5}
@@ -70,7 +77,7 @@ const DetailModal: TDetailTherapistModal = ({
           justifyContent="flex-start"
         >
           <FaLocationDot size={20} />
-          آدرس خونه : {data?.address}
+          <Typography>آدرس خونه : {data?.address}</Typography>
         </FlexBox>
         <FlexBox
           gap={0.5}
