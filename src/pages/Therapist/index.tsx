@@ -8,6 +8,7 @@ import { ITherapist } from "../../types/therapist.modal";
 import { useSearchParams } from "react-router-dom";
 import CreateOrEdit from "./CreateOrEdit";
 import FilterTherapist from "./Filter";
+import DetailModal from "./Detail";
 
 const Therapists: TTherapistFC = () => {
   const { data, refetch } = useGetAllTherapistQuery(
@@ -18,10 +19,11 @@ const Therapists: TTherapistFC = () => {
 
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<ITherapist>();
-  const [openEditDialog, setOpenEditDialog] = useState<ITherapist>();
+  const [openEditDialog, setOpenEditDialog] = useState<ITherapist | undefined>();
   const [openFilterDialog, setOpenFilterDialog] = useState<boolean>();
-
-
+  const [openDetailDialog, setOpenDetailDialog] = useState<
+    ITherapist | undefined
+  >(undefined);
 
   const openCreateDialogHandler = () => {
     setOpenCreateDialog(() => true);
@@ -31,7 +33,7 @@ const Therapists: TTherapistFC = () => {
   };
   const onCloseOpenOrEditDialog = () => {
     setOpenCreateDialog(() => false);
-    setOpenEditDialog(() => {});
+    setOpenEditDialog(() => undefined);
   };
   const openDeleteDialogHandler = (data: ITherapist) => {
     setOpenDeleteDialog(() => data);
@@ -44,6 +46,14 @@ const Therapists: TTherapistFC = () => {
   };
   const clearFilterHandler = () => {
     setSearchParams(() => "");
+  };
+
+  const openDetailDialogHandler = (value: ITherapist) => {
+    setOpenDetailDialog(() => value);
+  };
+
+  const handleCloseDetailDialog = () => {
+    setOpenDetailDialog(() => undefined);
   };
 
   return (
@@ -65,6 +75,14 @@ const Therapists: TTherapistFC = () => {
         handleEdit={openEditDialogHandler}
         isDelete={true}
         handleDelete={openDeleteDialogHandler}
+        additionalButtons={[
+          {
+            name: "جزییات",
+            label: "جزییات",
+            handleClick: openDetailDialogHandler,
+            color: "warning",
+          },
+        ]}
       />
       <CreateOrEdit
         open={openCreateDialog}
@@ -73,6 +91,11 @@ const Therapists: TTherapistFC = () => {
       <FilterTherapist
         open={openFilterDialog}
         handleClose={closeFilterDialogHandler}
+      />
+      <DetailModal
+        open={!!openDetailDialog}
+        data={openDetailDialog}
+        handleClose={handleCloseDetailDialog}
       />
     </>
   );
