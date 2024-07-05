@@ -6,7 +6,7 @@ const Layout: ILayoutType = ({ children }) => {
   return (
     <>
       <Header />
-      <Box p={5}>{children}</Box>
+      <Box sx={{maxWidth:'1536px',margin:'auto' ,}}>{children}</Box>
     </>
   );
 };

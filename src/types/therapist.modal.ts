@@ -52,14 +52,14 @@ export interface ITherapistUploadRes {
   filePath: string;
 }
 export interface ITherapist extends IBaseEntity, IBaseUser {
-  phone2: string;
-  bio: string;
-  address: string;
-  degreeOfEducation: EDegtreeOfEducation;
-  gender: EGender;
-  image: string;
-  workingFields: ICategory[];
-  schedules: ITherapistSchedules[];
+  phone2?: string;
+  bio?: string;
+  address?: string;
+  degreeOfEducation?: EDegtreeOfEducation;
+  gender?: EGender;
+  image?: string;
+  workingFields?: ICategory[];
+  schedules?: ITherapistSchedules[];
 }
 
 export interface ITherapistSchedules extends IBaseEntity {
