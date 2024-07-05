@@ -10,8 +10,6 @@ const FlexBox: TCustomFlexBoxFC = ({
 }) => {
   return (
     <Box
-      height="100%"
-      width="100%"
       display="flex"
       justifyContent={justifyContent}
       alignItems={alignItems}
