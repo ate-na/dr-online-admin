@@ -10,6 +10,12 @@ import CreateOrEdit from "./CreateOrEdit";
 import FilterTherapist from "./Filter";
 import DetailModal from "./Detail";
 
+export enum Actions {
+  Create = "Create",
+  Edit = "Edit",
+  DELETE = "DELETE",
+}
+
 const Therapists: TTherapistFC = () => {
   const { data, refetch } = useGetAllTherapistQuery(
     useGetSearchParamsFilter({ isObject: false })
@@ -19,11 +25,17 @@ const Therapists: TTherapistFC = () => {
 
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<ITherapist>();
-  const [openEditDialog, setOpenEditDialog] = useState<ITherapist | undefined>();
+  const [openEditDialog, setOpenEditDialog] = useState<
+    ITherapist | undefined
+  >();
   const [openFilterDialog, setOpenFilterDialog] = useState<boolean>();
   const [openDetailDialog, setOpenDetailDialog] = useState<
     ITherapist | undefined
   >(undefined);
+
+  const [openChartReserveDetail, setOpenChartReserveDetail] = useState<
+    ITherapist | undefined
+  >();
 
   const openCreateDialogHandler = () => {
     setOpenCreateDialog(() => true);
@@ -56,6 +68,10 @@ const Therapists: TTherapistFC = () => {
     setOpenDetailDialog(() => undefined);
   };
 
+  const handleClickBtn = (value: string, type: string) => {
+
+  };
+
   return (
     <>
       <Table
@@ -81,6 +97,12 @@ const Therapists: TTherapistFC = () => {
             label: "جزییات",
             handleClick: openDetailDialogHandler,
             color: "warning",
+          },
+          {
+            name: "چاپ رزرو",
+            label: "چاپ رزرو",
+            handleClick: openDetailDialogHandler,
+            color: "info",
           },
         ]}
       />
