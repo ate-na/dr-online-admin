@@ -11,6 +11,12 @@ import FilterTherapist from "./Filter";
 import DetailModal from "./Detail";
 import ConfirmModal from "../../components/kits/Confirm";
 
+export enum Actions {
+  Create = "Create",
+  Edit = "Edit",
+  DELETE = "DELETE",
+}
+
 const Therapists: TTherapistFC = () => {
   const { data, refetch } = useGetAllTherapistQuery(
     useGetSearchParamsFilter({ isObject: false })
@@ -27,6 +33,10 @@ const Therapists: TTherapistFC = () => {
   const [openDetailDialog, setOpenDetailDialog] = useState<
     ITherapist | undefined
   >(undefined);
+
+  const [openChartReserveDetail, setOpenChartReserveDetail] = useState<
+    ITherapist | undefined
+  >();
 
   const openCreateDialogHandler = () => {
     setOpenCreateDialog(() => true);
@@ -65,6 +75,8 @@ const Therapists: TTherapistFC = () => {
 
   const onCancelHandler = () => {};
 
+  const handleClickBtn = (value: string, type: string) => {};
+
   return (
     <>
       <Table
@@ -90,6 +102,12 @@ const Therapists: TTherapistFC = () => {
             label: "جزییات",
             handleClick: openDetailDialogHandler,
             color: "warning",
+          },
+          {
+            name: "چاپ رزرو",
+            label: "چاپ رزرو",
+            handleClick: openDetailDialogHandler,
+            color: "info",
           },
         ]}
       />
