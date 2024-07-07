@@ -76,8 +76,8 @@ export interface ICreateOrEditTherapistReqBody {
   phone2: string;
   bio: string;
   address: string;
-  degreeOfEducation: EDegtreeOfEducation;
-  gender: EGender;
+  degreeOfEducation: string;
+  gender: string;
   image: string;
   workingFields: number[];
 }

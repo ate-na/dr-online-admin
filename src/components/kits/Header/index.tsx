@@ -10,9 +10,9 @@ const Header: THeaderType = () => {
   const authCtx = useAuth();
 
   return (
-    <header style={{paddingBottom:'40px'}}>
+    <header style={{ paddingBottom: "50px" }}>
       <AppBar position="static">
-        <Toolbar sx={{ padding: 3 }}>
+        <Toolbar sx={{ padding: 3, margin: "auto" }}>
           <FlexBox gap={8} component={"ul"}>
             <Typography component={"h1"} variant="body1">
               {authCtx.user?.firstName} {authCtx.user?.lastName}

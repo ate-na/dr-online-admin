@@ -10,12 +10,20 @@ import {
   EDegtreeOfEducationItems,
   GenderItems,
 } from "../../../types/therapist.modal";
-import { useGetCategoriesQuery, useUploadIconsMutation } from "../../../api/categories";
+import {
+  useGetCategoriesQuery,
+  useUploadIconsMutation,
+} from "../../../api/categories";
 import Button from "../../../components/kits/Button";
-import { useCreateTherapistMutation } from "../../../api/therapist";
+import {
+  useCreateTherapistMutation,
+  useDeleteTherapitMutation,
+} from "../../../api/therapist";
 import { Avatar, IconButton } from "@mui/material";
 import { useRef, useState } from "react";
 import { createAvatarStyle } from "./index.styles";
+import toast from "react-hot-toast";
+import useErrorHandling from "../../../hooks/useErrorHandling";
 
 const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
   const ref = useRef<HTMLInputElement>(null);
@@ -28,10 +36,13 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
   const { data: categories, isLoading: isCategoryLoading } =
     useGetCategoriesQuery("");
 
-  const [submit, {}] = useCreateTherapistMutation();
-  const [uploadFile,{}]=useUploadIconsMutation()
+  const [submit, { isSuccess: isSubmitSuccess, isError: isSubmitError }] =
+    useCreateTherapistMutation();
+  const [uploadFile, {}] = useUploadIconsMutation();
 
   const { classes } = createAvatarStyle();
+
+  const [handleDelete, {}] = useDeleteTherapitMutation();
 
   const onSubmitHandler = handleSubmit(
     async (value) => {
@@ -42,15 +53,29 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
         ref.current?.files &&
         ref.current?.files?.length > 0
       ) {
-        // submit({image:ref.current?.files,});
-        const res=await uploadFile({icon:ref.current.files[0]})
-        console.log("the response is",res)
+        const res = await uploadFile({ icon: ref.current.files[0] });
+        if (!res?.data) toast.error("فرایند با شکست مواجه شد");
+        const workfiled = categories?.content.find(
+          (e) => e.faName.trim() === value.workingFields.trim()
+        )?.id;
+        const workingFields = workfiled ? [workfiled] : [];
+
+        if (res.data?.fileName)
+          submit({
+            ...value,
+            image: res.data?.fileName,
+            workingFields: workingFields,
+          });
+        handleClose();
+      } else {
+        toast.error("پروفایل پزشک ضروری است");
       }
     },
     (error) => {
       console.log("the error is", error);
     }
   );
+  useErrorHandling({ isError: isSubmitError, isSuccess: isSubmitSuccess });
 
   const handleOnChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files && e?.target?.files.length > 0)
@@ -131,8 +156,8 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
           />
           <Select
             control={control}
-            name="degreeOfEducation"
-            selectLabel="مدرک تحصیلی پزشک"
+            name="workingFields"
+            selectLabel="زمینه کاری پزشک"
             items={
               (categories?.content &&
                 categories?.content.map((e) => ({

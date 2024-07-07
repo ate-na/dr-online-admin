@@ -3,6 +3,7 @@ export enum provideTagsType {
   category = "category",
   admin = "admin",
   patient = "patient",
+  therapist = "therapist",
 }
 export const provideTags: provideTagsType[] = [
   provideTagsType.location,

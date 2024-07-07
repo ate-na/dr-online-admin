@@ -3,6 +3,7 @@ import {
   TTherapistsPageRes,
 } from "../types/therapist.modal";
 import { Api } from "./base";
+import { provideTagsType } from "./index.constant";
 
 const TherapistApi = Api.injectEndpoints({
   endpoints: (build) => ({
@@ -13,6 +14,7 @@ const TherapistApi = Api.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: [provideTagsType.therapist],
     }),
     createTherapist: build.mutation<void, ICreateOrEditTherapistReqBody>({
       query: (arg) => {
@@ -22,6 +24,7 @@ const TherapistApi = Api.injectEndpoints({
           body: arg,
         };
       },
+      invalidatesTags: [provideTagsType.therapist],
     }),
     updateTherapist: build.mutation<void, ICreateOrEditTherapistReqBody>({
       query: (arg) => {
@@ -29,6 +32,15 @@ const TherapistApi = Api.injectEndpoints({
           url: "/therapist",
           method: "PATCH",
           body: arg,
+        };
+      },
+      invalidatesTags: [provideTagsType.therapist],
+    }),
+    deleteTherapit: build.mutation<void, number>({
+      query: (arg) => {
+        return {
+          url: `/DELETE/${arg}`,
+          method: "DELETE",
         };
       },
     }),
@@ -39,4 +51,5 @@ export const {
   useGetAllTherapistQuery,
   useCreateTherapistMutation,
   useUpdateTherapistMutation,
+  useDeleteTherapitMutation,
 } = TherapistApi;

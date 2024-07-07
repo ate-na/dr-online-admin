@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import CreateOrEdit from "./CreateOrEdit";
 import FilterTherapist from "./Filter";
 import DetailModal from "./Detail";
+import ConfirmModal from "../../components/kits/Confirm";
 
 const Therapists: TTherapistFC = () => {
   const { data, refetch } = useGetAllTherapistQuery(
@@ -19,7 +20,9 @@ const Therapists: TTherapistFC = () => {
 
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState<ITherapist>();
-  const [openEditDialog, setOpenEditDialog] = useState<ITherapist | undefined>();
+  const [openEditDialog, setOpenEditDialog] = useState<
+    ITherapist | undefined
+  >();
   const [openFilterDialog, setOpenFilterDialog] = useState<boolean>();
   const [openDetailDialog, setOpenDetailDialog] = useState<
     ITherapist | undefined
@@ -55,6 +58,12 @@ const Therapists: TTherapistFC = () => {
   const handleCloseDetailDialog = () => {
     setOpenDetailDialog(() => undefined);
   };
+
+  const onDeleteItemHandler = () => {
+    console.log("delete", openDeleteDialog);
+  };
+
+  const onCancelHandler = () => {};
 
   return (
     <>
@@ -96,6 +105,15 @@ const Therapists: TTherapistFC = () => {
         open={!!openDetailDialog}
         data={openDetailDialog}
         handleClose={handleCloseDetailDialog}
+      />
+      <ConfirmModal
+        agreeHandler={onDeleteItemHandler}
+        cancelHandler={onCancelHandler}
+        handleClose={onCancelHandler}
+        agreeTitle=""
+        cancelTitle=""
+        open={!!openDeleteDialog}
+        title=""
       />
     </>
   );

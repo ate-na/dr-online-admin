@@ -23,12 +23,24 @@ const DetailModal: TDetailTherapistModal = ({
   console.log("the data is", data);
   return (
     <Modal title="جزییات پزشک" open={open} handleClose={handleClose}>
-      <Avatar
-        sx={{ width: 60, height: 60 }}
-        src={"https://pyschologist-api.liara.run" + data?.image}
-      />
-      <FlexBox gap={1} justifyContent={"flex-start"} flexDirection={"column"}>
+      <FlexBox>
+        <Avatar
+          sx={{
+            width: 70,
+            height: 70,
+            textAlign: "center",
+          }}
+          src={"https://pyschologist-api.liara.run" + data?.image}
+        />
+      </FlexBox>
+      <FlexBox
+        paddingTop={"20px"}
+        gap={1}
+        justifyContent={"flex-start"}
+        flexDirection={"column"}
+      >
         <FlexBox
+          width={"100%"}
           gap={0.5}
           flexDirection={"row"}
           height={"fit-content"}
@@ -40,6 +52,7 @@ const DetailModal: TDetailTherapistModal = ({
           </Typography>
         </FlexBox>
         <FlexBox
+          width={"100%"}
           gap={0.5}
           flexDirection={"row"}
           height={"fit-content"}
@@ -51,6 +64,7 @@ const DetailModal: TDetailTherapistModal = ({
           </Typography>
         </FlexBox>
         <FlexBox
+          width={"100%"}
           gap={0.5}
           flexDirection={"row"}
           height={"fit-content"}
@@ -60,6 +74,7 @@ const DetailModal: TDetailTherapistModal = ({
           جنسیت پزشک : {getGenderEnum(data?.gender)}
         </FlexBox>
         <FlexBox
+          width={"100%"}
           gap={0.5}
           flexDirection={"row"}
           height={"fit-content"}
@@ -71,6 +86,7 @@ const DetailModal: TDetailTherapistModal = ({
           </Typography>
         </FlexBox>
         <FlexBox
+          width={"100%"}
           gap={0.5}
           flexDirection={"row"}
           height={"fit-content"}
@@ -80,6 +96,7 @@ const DetailModal: TDetailTherapistModal = ({
           <Typography>آدرس خونه : {data?.address}</Typography>
         </FlexBox>
         <FlexBox
+          width={"100%"}
           gap={0.5}
           flexDirection={"row"}
           height={"fit-content"}
@@ -92,6 +109,7 @@ const DetailModal: TDetailTherapistModal = ({
           ))}
         </FlexBox>
         <FlexBox
+          width={"100%"}
           gap={0.5}
           flexDirection={"row"}
           height={"fit-content"}
@@ -99,11 +117,12 @@ const DetailModal: TDetailTherapistModal = ({
           alignItems="flex-start"
         >
           <MdDisplaySettings
-            size={80}
+            size={20}
             display={"inline-block"}
-            height={"1rem"}
+            height={"100%"}
+            style={{ paddingTop: "2px" }}
           />
-          بیوگرافی پزشک : {data?.bio}
+          <Typography>بیوگرافی پزشک : {data?.bio}</Typography>
         </FlexBox>
       </FlexBox>
     </Modal>

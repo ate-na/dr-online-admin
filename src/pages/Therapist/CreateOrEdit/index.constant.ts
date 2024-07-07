@@ -19,5 +19,5 @@ export const therapistValidation = zod.object({
   gender: zod.string({ required_error: "جنسیت پزشک را پر کنید" }),
   address: zod.string({ required_error: "آدرس خونه باید پر شود" }),
   bio: zod.string({ required_error: "فیلد بیوگرافی پزشک را پر کنید" }),
-  image: zod.string({ required_error: "" }),
+  image: zod.string({ required_error: "" }).optional(),
 });
