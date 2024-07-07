@@ -12,9 +12,12 @@ import DetailModal from "./Detail";
 import ConfirmModal from "../../components/kits/Confirm";
 
 export enum Actions {
-  Create = "Create",
-  Edit = "Edit",
-  DELETE = "DELETE",
+  CREATE = "Create",
+  EDIT = "Edit",
+  DELETE = "Delete",
+  CHART = "Chart",
+  DETAIL = "Detail",
+  FILTER = "Filter",
 }
 
 const Therapists: TTherapistFC = () => {
@@ -75,7 +78,28 @@ const Therapists: TTherapistFC = () => {
 
   const onCancelHandler = () => {};
 
-  const handleClickBtn = (value: string, type: string) => {};
+  const handleClickBtn = (type: Actions, value?: ITherapist | undefined) => {
+    switch (type) {
+      case Actions.CHART:
+        setOpenChartReserveDetail(() => value);
+        break;
+      case Actions.DETAIL:
+        setOpenDetailDialog(() => value);
+        break;
+      case Actions.CREATE:
+        setOpenCreateDialog(() => true);
+        break;
+      case Actions.EDIT:
+        setOpenEditDialog(() => value);
+        break;
+      case Actions.DELETE:
+        setOpenDeleteDialog(() => value);
+        break;
+      case Actions.FILTER:
+        setOpenFilterDialog(() => true);
+        break;
+    }
+  };
 
   return (
     <>
@@ -89,24 +113,24 @@ const Therapists: TTherapistFC = () => {
         totalPage={data?.count}
         isCreateButton={true}
         createLabel="ساخت پزشک جدید"
-        handleCreateButton={openCreateDialogHandler}
-        handleFilter={openFilterDialogHandler}
+        handleCreateButton={handleClickBtn.bind(null, Actions.CREATE) as any}
+        handleFilter={handleClickBtn.bind(null, Actions.FILTER)}
         handleResetFilter={clearFilterHandler}
         isEdit={true}
-        handleEdit={openEditDialogHandler}
+        handleEdit={handleClickBtn.bind(null, Actions.EDIT)}
         isDelete={true}
         handleDelete={openDeleteDialogHandler}
         additionalButtons={[
           {
             name: "جزییات",
             label: "جزییات",
-            handleClick: openDetailDialogHandler,
+            handleClick: handleClickBtn.bind(null, Actions.DETAIL),
             color: "warning",
           },
           {
             name: "چاپ رزرو",
             label: "چاپ رزرو",
-            handleClick: openDetailDialogHandler,
+            handleClick: handleClickBtn.bind(null, Actions.CHART),
             color: "info",
           },
         ]}

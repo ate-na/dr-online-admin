@@ -28,7 +28,7 @@ interface ITableProps<T> {
   dataKey: string;
   title?: string;
   isCreateButton?: boolean;
-  handleCreateButton?: (data: Record<string, any>) => void;
+  handleCreateButton?: (data: Record<any, any>) => void;
   createLabel?: string;
   loading?: boolean;
   count?: number;
