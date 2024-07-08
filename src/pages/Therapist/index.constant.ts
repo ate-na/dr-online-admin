@@ -1,5 +1,6 @@
 import { IColumns } from "../../components/kits/Table/index.types";
 import { EGender, ITherapist } from "../../types/therapist.modal";
+import { ActionApp, Actions, IState } from "./index.types";
 
 export const TherapistColumns: IColumns[] = [
   { label: "id", name: "سریال پزشک" },
@@ -24,3 +25,34 @@ export const TherapistColumns: IColumns[] = [
     },
   },
 ];
+
+export const intialState = {
+  openCreateDialog: false,
+  openDeleteDialog: undefined,
+  openEditDialog: undefined,
+  openFilterDialog: false,
+  openDetailDialog: undefined,
+  openChartReserveDetail: undefined,
+};
+
+export const reducer = (state: IState, action: ActionApp): IState => {
+  switch (action.type) {
+    case Actions.CHART:
+      return {
+        ...state,
+        openChartReserveDetail: action?.payload as ITherapist,
+      };
+    case Actions.DETAIL:
+      return { ...state, openDetailDialog: action?.payload as ITherapist };
+    case Actions.CREATE:
+      return { ...state, openCreateDialog: action?.payload as boolean };
+    case Actions.EDIT:
+      return { ...state, openEditDialog: action?.payload as ITherapist };
+    case Actions.DELETE:
+      return { ...state, openDeleteDialog: action?.payload as ITherapist };
+    case Actions.FILTER:
+      return { ...state, openFilterDialog: action?.payload as boolean };
+    default:
+      return { ...state };
+  }
+};

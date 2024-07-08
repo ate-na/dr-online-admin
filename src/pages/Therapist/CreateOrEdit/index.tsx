@@ -42,7 +42,6 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
 
   const { classes } = createAvatarStyle();
 
-  const [handleDelete, {}] = useDeleteTherapitMutation();
 
   const onSubmitHandler = handleSubmit(
     async (value) => {

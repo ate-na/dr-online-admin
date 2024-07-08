@@ -39,7 +39,7 @@ const TherapistApi = Api.injectEndpoints({
     deleteTherapit: build.mutation<void, number>({
       query: (arg) => {
         return {
-          url: `/DELETE/${arg}`,
+          url: `/therapist/${arg}`,
           method: "DELETE",
         };
       },
