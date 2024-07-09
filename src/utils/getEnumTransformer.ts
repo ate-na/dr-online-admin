@@ -1,4 +1,8 @@
-import { EDegtreeOfEducation, EDegtreeOfEducationItems, EGender } from "../types/therapist.modal";
+import {
+  EDegtreeOfEducation,
+  EDegtreeOfEducationItems,
+  EGender,
+} from "../types/therapist.modal";
 
 export const getGenderEnum = (data: EGender | undefined) => {
   switch (data) {
@@ -12,6 +16,16 @@ export const getGenderEnum = (data: EGender | undefined) => {
 };
 
 export const getDegreeEnum = (data: EDegtreeOfEducation | undefined) => {
-    if(!data) return ''
-   return EDegtreeOfEducationItems.find((e)=>e.value===data)?.label
+  if (!data) return "";
+  return EDegtreeOfEducationItems.find((e) => e.value === data)?.label;
 };
+
+// export const getDaysOfWeek=(num:number)=>{
+//   // switch (num){
+//   //   case 'شنبه'
+//   // }
+// }
+
+export enum getDaysOfWeek {
+  monday = 1,
+}

@@ -13,6 +13,7 @@ import FilterTherapist from "./Filter";
 import DetailModal from "./Detail";
 import ConfirmModal from "../../components/kits/Confirm";
 import useErrorHandling from "../../hooks/useErrorHandling";
+import ReserveChart from "./ReserveChart";
 
 const Therapists: TTherapistFC = () => {
   const { data, refetch } = useGetAllTherapistQuery(
@@ -40,7 +41,7 @@ const Therapists: TTherapistFC = () => {
 
   const agreeDeleteHandler = () => {
     if (state?.openDeleteDialog?.id) handleDelete(state?.openDeleteDialog?.id);
-    handleCloseDialog(Actions.DELETE)
+    handleCloseDialog(Actions.DELETE);
   };
 
   useErrorHandling({
@@ -103,6 +104,11 @@ const Therapists: TTherapistFC = () => {
         cancelTitle="خیر لغو درخواست"
         open={!!state.openDeleteDialog}
         title="آیا از حذف این آیتم اطمینان دارید ؟"
+      />
+      <ReserveChart
+        open={!!state.openChartReserveDetail}
+        therapistId={state.openChartReserveDetail?.id as any}
+        handleClose={handleCloseDialog.bind(null, Actions.CHART)}
       />
     </>
   );

@@ -7,7 +7,7 @@ const TherapistScheduleApi = Api.injectEndpoints({
       TTherapistSchedulesPageRes,number>({
       query: (arg) => {
         return {
-          url: `/therapist/per-day/${arg}`,
+          url: `therapist-schedules/therapist/per-day/${arg}`,
           method: "GET",
         };
       },

@@ -43,6 +43,7 @@ const TherapistApi = Api.injectEndpoints({
           method: "DELETE",
         };
       },
+      invalidatesTags: [provideTagsType.therapist],
     }),
   }),
 });
