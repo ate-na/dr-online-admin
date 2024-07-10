@@ -3,7 +3,11 @@ import { useGetTherapistSchedulesPerDayQuery } from "../../../api/therapistSched
 import FlexBox from "../../../components/kits/FlexBox";
 import Modal from "../../../components/kits/Modal";
 import { TReserveChart } from "./index.types";
-import { getDaysOfWeek } from "../../../utils/getEnumTransformer";
+import {
+  getDaysOfWeek,
+  getDaysOfWeekTransalate,
+} from "../../../utils/getEnumTransformer";
+import { useNavigate } from "react-router-dom";
 
 const ReserveChart: TReserveChart = ({
   open = false,
@@ -11,23 +15,48 @@ const ReserveChart: TReserveChart = ({
   therapistId,
 }) => {
   const { data } = useGetTherapistSchedulesPerDayQuery(therapistId);
-  console.log("the open is", open, data, therapistId);
+  const navigate = useNavigate();
   return (
-    <Modal title="چارت رزرو های این پزشک" open={open} handleClose={handleClose}>
-      <FlexBox
-        padding={2}
-        flexDirection={"column"}
-        alignItems="flex-start"
-        gap={4}
-        borderRadius={"4px"}
-        sx={{ background: "#1d232a", width: "14rem", height: "9rem" }}
+    <Modal
+      width="fit-content"
+      flexDirection={"row"}
+      title="چارت رزرو های این پزشک"
+      open={open}
+      handleClose={handleClose}
+    >
+      <Box
+        paddingTop={2}
+        display={"flex"}
+        gap={2}
+        flexDirection={"row"}
+        flexWrap={"wrap"}
+        flexBasis={40}
+        paddingX={4}
       >
-        <Box>
-          <Typography>{getDaysOfWeek[1]}</Typography>
-          <Typography>تعداد رزوهای روز: 1</Typography>
-        </Box>
-        <Button fullWidth>نمایش کلی چارت</Button>
-      </FlexBox>
+        {data?.map((el) => (
+          <FlexBox
+            padding={2}
+            flexDirection={"column"}
+            alignItems="flex-start"
+            gap={4}
+            borderRadius={"4px"}
+            sx={{ background: "#1d232a", width: "15rem", height: "9rem" }}
+          >
+            <Box>
+              <Typography>{getDaysOfWeekTransalate(el.day)}</Typography>
+              <Typography>تعداد رزوهای روز: {el.items.length}</Typography>
+            </Box>
+            <Button
+              fullWidth
+              onClick={() =>
+                navigate(`/therapists/schedules/${therapistId}/${el.day}`)
+              }
+            >
+              نمایش کلی چارت
+            </Button>
+          </FlexBox>
+        ))}
+      </Box>
     </Modal>
   );
 };

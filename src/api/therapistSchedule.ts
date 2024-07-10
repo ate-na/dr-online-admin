@@ -1,10 +1,15 @@
-import { TTherapistSchedulesPageRes } from "../types/therapist.modal";
+import {
+  TTherapistSchedulesResPerDay,
+  TTherapistSchedulesPageRes,
+} from "../types/therapist.modal";
 import { Api } from "./base";
 
 const TherapistScheduleApi = Api.injectEndpoints({
   endpoints: (build) => ({
     getTherapistSchedulesPerDay: build.query<
-      TTherapistSchedulesPageRes,number>({
+      TTherapistSchedulesResPerDay[],
+      number
+    >({
       query: (arg) => {
         return {
           url: `therapist-schedules/therapist/per-day/${arg}`,
@@ -12,7 +17,19 @@ const TherapistScheduleApi = Api.injectEndpoints({
         };
       },
     }),
+
+    getTherapistSchedulesChartDetail: build.query<
+      TTherapistSchedulesPageRes,
+      { day: number; therapist: number }
+    >({
+      query(arg) {
+        return `therapist-schedules/therapist/${arg?.therapist}/day/${arg?.day}`;
+      },
+    }),
   }),
 });
 
-export const {useGetTherapistSchedulesPerDayQuery} = TherapistScheduleApi;
+export const {
+  useGetTherapistSchedulesPerDayQuery,
+  useGetTherapistSchedulesChartDetailQuery,
+} = TherapistScheduleApi;

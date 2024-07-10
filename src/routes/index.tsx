@@ -8,6 +8,7 @@ import AuthContext from "../context";
 import Admin from "../pages/Admin";
 import Categories from "../pages/Categories";
 import Patient from "../pages/Patients";
+import TherapistScheduleChart from "../pages/Therapist/Schedule";
 
 const RoutesNavigation = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -23,6 +24,10 @@ const RoutesNavigation = () => {
             <Route path="/categories" element={<Categories />} />
             <Route path="/admins" element={<Admin />} />
             <Route path="patients" element={<Patient />} />
+            <Route
+              path="therapists/schedules/:therapistId/:day"
+              element={<TherapistScheduleChart />}
+            />
           </Routes>
         </Layout>
       )}

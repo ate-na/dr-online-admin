@@ -2,6 +2,7 @@ import {
   EDegtreeOfEducation,
   EDegtreeOfEducationItems,
   EGender,
+  TherapistScheduleType,
 } from "../types/therapist.modal";
 
 export const getGenderEnum = (data: EGender | undefined) => {
@@ -20,12 +21,40 @@ export const getDegreeEnum = (data: EDegtreeOfEducation | undefined) => {
   return EDegtreeOfEducationItems.find((e) => e.value === data)?.label;
 };
 
-// export const getDaysOfWeek=(num:number)=>{
-//   // switch (num){
-//   //   case 'شنبه'
-//   // }
-// }
+export const getDaysOfWeekTransalate = (dayOfWeek: number) => {
+  switch (dayOfWeek) {
+    case getDaysOfWeek.monday:
+      return "دوشنبه";
+    case getDaysOfWeek.tuesday:
+      return "سه شنبه";
+    case getDaysOfWeek.wednesday:
+      return "چهار شنبه";
+    case getDaysOfWeek.thursday:
+      return "پنج شنبه";
+    case getDaysOfWeek.friday:
+      return "جمعه";
+    case getDaysOfWeek.saturday:
+      return "شنبه";
+    case getDaysOfWeek.sunday:
+      return "یک شنبه";
+  }
+};
 
 export enum getDaysOfWeek {
   monday = 1,
+  tuesday = 2,
+  wednesday = 3,
+  thursday = 4,
+  friday = 5,
+  saturday = 6,
+  sunday = 7,
 }
+
+export const TherapistScheduleTypeTranslate = (type: TherapistScheduleType) => {
+  switch (type) {
+    case TherapistScheduleType.online:
+      return "آنلاین";
+    case TherapistScheduleType.onsite:
+      return "حضوری";
+  }
+};

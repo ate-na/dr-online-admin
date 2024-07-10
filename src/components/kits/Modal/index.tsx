@@ -15,6 +15,8 @@ const Modal: TModal = ({
   title,
   bgcolor = "#282E34",
   children,
+  width='500px',
+  maxWidth='900px'
 }) => {
   return (
     <MuiModal open={open} onClose={handleClose}>
@@ -25,11 +27,12 @@ const Modal: TModal = ({
           left: "50%",
           transform: "translate(-50%, -50%)",
           background: bgcolor,
-          width: "500px",
+          width: width,
           padding: "30px",
           borderRadius: "4px",
           maxHeight: "800px",
           overflowY: "auto",
+          maxWidth
         }}
       >
         <FlexBox justifyContent="space-between" padding={1}>

@@ -81,3 +81,8 @@ export interface ICreateOrEditTherapistReqBody {
   image: string;
   workingFields: number[];
 }
+
+export enum TherapistScheduleType {
+  online = "online",
+  onsite = "onsite",
+}
