@@ -36,12 +36,17 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
   const { data: categories, isLoading: isCategoryLoading } =
     useGetCategoriesQuery("");
 
-  const [submit, { isSuccess: isSubmitSuccess, isError: isSubmitError }] =
-    useCreateTherapistMutation();
+  const [
+    submit,
+    {
+      isSuccess: isSubmitSuccess,
+      isError: isSubmitError,
+      isLoading: isSubmitLoading,
+    },
+  ] = useCreateTherapistMutation();
   const [uploadFile, {}] = useUploadIconsMutation();
 
   const { classes } = createAvatarStyle();
-
 
   const onSubmitHandler = handleSubmit(
     async (value) => {
@@ -76,6 +81,7 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
   );
   useErrorHandling({ isError: isSubmitError, isSuccess: isSubmitSuccess });
 
+  console.log("isSubmitLoading", isSubmitLoading);
   const handleOnChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files && e?.target?.files.length > 0)
       setImageSrc(() => URL.createObjectURL(e?.target?.files[0]));
@@ -190,7 +196,9 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
           multiline={true}
           rows={3}
         />
-        <Button type="submit">ساخت پزشک جدید</Button>
+        <Button loading={isSubmitLoading} type="submit">
+          ساخت پزشک جدید
+        </Button>
       </form>
     </Modal>
   );

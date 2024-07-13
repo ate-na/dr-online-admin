@@ -33,7 +33,7 @@ const Login: TLoginFC = () => {
     <Box className={classes.root}>
       <Grid container spacing={2}>
         <Grid item md={6}>
-          <FlexBox height="100%" width="100%" flexDirection="column">
+          <FlexBox height="100%" width="100%" flexDirection="column" gap={4}>
             <FlexBox width="100%" gap={2}>
               <VerifiedUserIcon fontSize="large" />
               <Typography variant="h4" component="h1">
@@ -41,7 +41,7 @@ const Login: TLoginFC = () => {
               </Typography>
             </FlexBox>
             <FlexBox
-              width="100%"
+              width="80%"
               alignItems="flex-start"
               gap={2}
               flexDirection="column"

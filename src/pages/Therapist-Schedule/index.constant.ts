@@ -1,5 +1,5 @@
-import { IColumns } from "../../../components/kits/Table/index.types";
-import { TherapistScheduleTypeTranslate } from "../../../utils/getEnumTransformer";
+import { IColumns } from "../../components/kits/Table/index.types";
+import { TherapistScheduleTypeTranslate } from "../../utils/getEnumTransformer";
 
 export const TherapistScheduleColumns: IColumns[] = [
   {
@@ -25,7 +25,8 @@ export const TherapistScheduleColumns: IColumns[] = [
     label: "location",
     name: "آدرس برگزاری",
     transform(data) {
-      return data?.address;
+      console.log(data);
+      return data?.location?.address;
     },
   },
   {

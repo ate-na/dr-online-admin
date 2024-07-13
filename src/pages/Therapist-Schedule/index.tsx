@@ -1,5 +1,5 @@
-import { useGetTherapistSchedulesChartDetailQuery } from "../../../api/therapistSchedule";
-import Table from "../../../components/kits/Table";
+import { useGetTherapistSchedulesChartDetailQuery } from "../../api/therapistSchedule";
+import Table from "../../components/kits/Table";
 import { TherapistScheduleColumns } from "./index.constant";
 import { TTherapistSchedulesChart } from "./inex.types";
 

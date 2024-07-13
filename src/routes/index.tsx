@@ -8,7 +8,7 @@ import AuthContext from "../context";
 import Admin from "../pages/Admin";
 import Categories from "../pages/Categories";
 import Patient from "../pages/Patients";
-import TherapistScheduleChart from "../pages/Therapist/Schedule";
+import TherapistScheduleChart from "../pages/Therapist-Schedule";
 
 const RoutesNavigation = () => {
   const { isLoggedIn } = useContext(AuthContext);
