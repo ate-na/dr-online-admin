@@ -20,7 +20,6 @@ const DetailModal: TDetailTherapistModal = ({
   handleClose,
   data,
 }) => {
-  console.log("the data is", data);
   return (
     <Modal title="جزییات پزشک" open={open} handleClose={handleClose}>
       <FlexBox>
@@ -30,7 +29,11 @@ const DetailModal: TDetailTherapistModal = ({
             height: 70,
             textAlign: "center",
           }}
-          src={"https://pyschologist-api.liara.run" + data?.image}
+          src={
+            data?.image
+              ? `https://pyschologist-api.liara.run${data?.image}`
+              : ""
+          }
         />
       </FlexBox>
       <FlexBox

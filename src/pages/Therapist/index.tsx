@@ -14,15 +14,18 @@ import DetailModal from "./Detail";
 import ConfirmModal from "../../components/kits/Confirm";
 import useErrorHandling from "../../hooks/useErrorHandling";
 import ReserveChart from "./ReserveChart";
+import { useSearchParams } from "react-router-dom";
+import ChangePasswordDialog from "../../components/ui/ChangePassword";
 
 const Therapists: TTherapistFC = () => {
-  const { data, refetch } = useGetAllTherapistQuery(
+  const { data, refetch, isLoading } = useGetAllTherapistQuery(
     useGetSearchParamsFilter({ isObject: false })
   );
   const [state, dispatch] = useReducer(reducer, intialState);
-
   const [handleDelete, { isSuccess: isDeleteSuccess, isError: isDeleteError }] =
     useDeleteTherapitMutation();
+
+  const [_, setSearchParam] = useSearchParams();
 
   const handleOpenDialog = (type: Actions, value?: ITherapist | undefined) => {
     dispatch({
@@ -32,16 +35,26 @@ const Therapists: TTherapistFC = () => {
   };
 
   const handleCloseDialog = (type: Actions) => {
-    if (type === Actions.FILTER || type === Actions.DELETE) {
+    if (type === Actions.FILTER || type === Actions.CREATE) {
       dispatch({ type, payload: false });
     } else {
       dispatch({ type, payload: undefined });
     }
   };
 
+  const handleCloseCreateOrUpdate = () => {
+    handleCloseDialog(Actions.CREATE);
+    handleCloseDialog(Actions.EDIT);
+  };
+
   const agreeDeleteHandler = () => {
     if (state?.openDeleteDialog?.id) handleDelete(state?.openDeleteDialog?.id);
     handleCloseDialog(Actions.DELETE);
+  };
+
+  const resetFilterHandler = () => {
+    setSearchParam(() => "");
+    handleCloseDialog(Actions.FILTER);
   };
 
   useErrorHandling({
@@ -63,10 +76,11 @@ const Therapists: TTherapistFC = () => {
         createLabel="ساخت پزشک جدید"
         handleCreateButton={handleOpenDialog.bind(null, Actions.CREATE) as any}
         handleFilter={handleOpenDialog.bind(null, Actions.FILTER)}
-        handleResetFilter={handleCloseDialog.bind(null, Actions.FILTER)}
+        handleResetFilter={resetFilterHandler}
         isEdit={true}
         handleEdit={handleOpenDialog.bind(null, Actions.EDIT)}
         isDelete={true}
+        loading={isLoading}
         handleDelete={handleOpenDialog.bind(null, Actions.DELETE)}
         additionalButtons={[
           {
@@ -81,11 +95,18 @@ const Therapists: TTherapistFC = () => {
             handleClick: handleOpenDialog.bind(null, Actions.CHART),
             color: "info",
           },
+          {
+            name: "ویرایش پسوورد",
+            label: "ویرایش پسوورد",
+            handleClick: handleOpenDialog.bind(null, Actions.CHANGE_PASSWORD),
+            color: "secondary",
+          },
         ]}
       />
       <CreateOrEdit
-        open={state.openCreateDialog}
-        handleClose={handleCloseDialog.bind(null, Actions.CREATE)}
+        open={state.openCreateDialog || !!state.openEditDialog}
+        handleClose={handleCloseCreateOrUpdate}
+        data={state.openEditDialog}
       />
       <FilterTherapist
         open={state.openFilterDialog}
@@ -105,10 +126,17 @@ const Therapists: TTherapistFC = () => {
         open={!!state.openDeleteDialog}
         title="آیا از حذف این آیتم اطمینان دارید ؟"
       />
-      <ReserveChart
-        open={!!state.openChartReserveDetail}
-        therapistId={state.openChartReserveDetail?.id as any}
-        handleClose={handleCloseDialog.bind(null, Actions.CHART)}
+      {state.openChartReserveDetail && (
+        <ReserveChart
+          open={!!state.openChartReserveDetail}
+          therapistId={state.openChartReserveDetail?.id as any}
+          handleClose={handleCloseDialog.bind(null, Actions.CHART)}
+        />
+      )}
+      <ChangePasswordDialog
+        handleClose={handleCloseDialog.bind(null, Actions.CHANGE_PASSWORD)}
+        data={state.openChangePasswordDialog}
+        open={!!state.openChangePasswordDialog}
       />
     </>
   );

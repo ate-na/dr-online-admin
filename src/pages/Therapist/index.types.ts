@@ -12,6 +12,7 @@ export interface IState {
   openFilterDialog: boolean;
   openDetailDialog: ITherapist | undefined;
   openChartReserveDetail: ITherapist | undefined;
+  openChangePasswordDialog: ITherapist | undefined;
 }
 
 export type ActionApp = {
@@ -26,6 +27,5 @@ export enum Actions {
   CHART = "Chart",
   DETAIL = "Detail",
   FILTER = "Filter",
+  CHANGE_PASSWORD = "CHANGE_PASSWORD",
 }
-
-

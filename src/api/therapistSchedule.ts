@@ -3,6 +3,7 @@ import {
   TTherapistSchedulesPageRes,
 } from "../types/therapist.modal";
 import { Api } from "./base";
+import { provideTags, provideTagsType } from "./index.constant";
 
 const TherapistScheduleApi = Api.injectEndpoints({
   endpoints: (build) => ({
@@ -25,6 +26,16 @@ const TherapistScheduleApi = Api.injectEndpoints({
       query(arg) {
         return `therapist-schedules/therapist/${arg?.therapist}/day/${arg?.day}`;
       },
+      providesTags: [provideTagsType.therapistSchedule],
+    }),
+    deleteTherapistSchedule: build.mutation<void, number>({
+      query(arg) {
+        return {
+          url: `/therapist-schedules/${arg}`,
+          method: "DELETE",
+        };
+      },
+      invalidatesTags: [provideTagsType.therapistSchedule],
     }),
   }),
 });
@@ -32,4 +43,5 @@ const TherapistScheduleApi = Api.injectEndpoints({
 export const {
   useGetTherapistSchedulesPerDayQuery,
   useGetTherapistSchedulesChartDetailQuery,
+  useDeleteTherapistScheduleMutation,
 } = TherapistScheduleApi;

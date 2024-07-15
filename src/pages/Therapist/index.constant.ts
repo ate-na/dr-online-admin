@@ -33,6 +33,7 @@ export const intialState = {
   openFilterDialog: false,
   openDetailDialog: undefined,
   openChartReserveDetail: undefined,
+  openChangePasswordDialog: undefined,
 };
 
 export const reducer = (state: IState, action: ActionApp): IState => {
@@ -43,7 +44,10 @@ export const reducer = (state: IState, action: ActionApp): IState => {
         openChartReserveDetail: action?.payload as ITherapist,
       };
     case Actions.DETAIL:
-      console.log("called",{ ...state, openDetailDialog: action?.payload as ITherapist })
+      console.log("called", {
+        ...state,
+        openDetailDialog: action?.payload as ITherapist,
+      });
       return { ...state, openDetailDialog: action?.payload as ITherapist };
     case Actions.CREATE:
       return { ...state, openCreateDialog: action?.payload as boolean };
@@ -53,6 +57,11 @@ export const reducer = (state: IState, action: ActionApp): IState => {
       return { ...state, openDeleteDialog: action?.payload as ITherapist };
     case Actions.FILTER:
       return { ...state, openFilterDialog: action?.payload as boolean };
+    case Actions.CHANGE_PASSWORD:
+      return {
+        ...state,
+        openChangePasswordDialog: action?.payload as ITherapist,
+      };
     default:
       return { ...state };
   }

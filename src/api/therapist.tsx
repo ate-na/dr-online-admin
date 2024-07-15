@@ -1,5 +1,6 @@
 import {
   ICreateOrEditTherapistReqBody,
+  ITherapist,
   TTherapistsPageRes,
 } from "../types/therapist.modal";
 import { Api } from "./base";
@@ -26,10 +27,13 @@ const TherapistApi = Api.injectEndpoints({
       },
       invalidatesTags: [provideTagsType.therapist],
     }),
-    updateTherapist: build.mutation<void, ICreateOrEditTherapistReqBody>({
+    updateTherapist: build.mutation<
+      void,
+      Partial<ITherapist>
+    >({
       query: (arg) => {
         return {
-          url: "/therapist",
+          url: `/therapist/${arg.id}`,
           method: "PATCH",
           body: arg,
         };

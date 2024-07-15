@@ -72,7 +72,7 @@ export interface ITherapistSchedules extends IBaseEntity {
   room: number;
 }
 
-export interface ICreateOrEditTherapistReqBody {
+export interface ICreateOrEditTherapistReqBody extends IBaseUser {
   phone2: string;
   bio: string;
   address: string;

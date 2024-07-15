@@ -18,23 +18,32 @@ import Button from "../../../components/kits/Button";
 import {
   useCreateTherapistMutation,
   useDeleteTherapitMutation,
+  useUpdateTherapistMutation,
 } from "../../../api/therapist";
 import { Avatar, IconButton } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createAvatarStyle } from "./index.styles";
 import toast from "react-hot-toast";
 import useErrorHandling from "../../../hooks/useErrorHandling";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { IError } from "../../../types/base.modal";
 
-const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
+const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
   const ref = useRef<HTMLInputElement>(null);
   const [imageSrc, setImageSrc] = useState<string>("");
 
-  const { control, handleSubmit } = useForm<TCreateOrEditFormValidation>({
-    resolver: zodResolver(therapistValidation),
-  });
+  const { control, handleSubmit, reset } = useForm<TCreateOrEditFormValidation>(
+    {
+      resolver: zodResolver(therapistValidation),
+      values: {
+        ...(data as any),
+        workingFields: data?.workingFields[0].faName,
+      },
+    }
+  );
 
   const { data: categories, isLoading: isCategoryLoading } =
-    useGetCategoriesQuery("");
+    useGetCategoriesQuery("limit=1000");
 
   const [
     submit,
@@ -42,51 +51,94 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
       isSuccess: isSubmitSuccess,
       isError: isSubmitError,
       isLoading: isSubmitLoading,
+      error,
     },
   ] = useCreateTherapistMutation();
-  const [uploadFile, {}] = useUploadIconsMutation();
+  const [
+    uploadFile,
+    { isLoading: isUploadIconLoading, error: isUploadImageError },
+  ] = useUploadIconsMutation();
+
+  const [handleUpdate, updateData] = useUpdateTherapistMutation(data?.id);
 
   const { classes } = createAvatarStyle();
 
+  useEffect(() => {
+    setImageSrc(() =>
+      data?.image ? `https://pyschologist-api.liara.run${data?.image}` : ""
+    );
+  }, [data]);
+
   const onSubmitHandler = handleSubmit(
     async (value) => {
-      console.log("the value is", value);
-      if (
-        value &&
-        imageSrc &&
-        ref.current?.files &&
-        ref.current?.files?.length > 0
-      ) {
-        const res = await uploadFile({ icon: ref.current.files[0] });
-        if (!res?.data) toast.error("فرایند با شکست مواجه شد");
+      if (!data) {
+        if (
+          value &&
+          imageSrc &&
+          ref.current?.files &&
+          ref.current?.files?.length > 0
+        ) {
+          const res = await uploadFile({ icon: ref.current.files[0] });
+          if (!res?.data) toast.error("فرایند با شکست مواجه شد");
+          const workfiled = categories?.content.find(
+            (e) => e.faName.trim() === value.workingFields.trim()
+          )?.id;
+          const workingFields = workfiled ? [workfiled] : [];
+
+          if (res.data?.fileName)
+            submit({
+              ...value,
+              image: `/upload/${res.data?.fileName}`,
+              workingFields: workingFields,
+              password: value.phone,
+            });
+          handleClose();
+          reset();
+          setImageSrc(() => "");
+        } else {
+          toast.error("پروفایل پزشک ضروری است");
+        }
+      } else if (data) {
+        let res: any;
+        if (ref.current?.files && ref.current.files.length > 0) {
+          res = await uploadFile({ icon: ref.current.files[0] });
+        }
+
         const workfiled = categories?.content.find(
           (e) => e.faName.trim() === value.workingFields.trim()
         )?.id;
         const workingFields = workfiled ? [workfiled] : [];
 
-        if (res.data?.fileName)
-          submit({
-            ...value,
-            image: res.data?.fileName,
-            workingFields: workingFields,
-          });
+        const body = {
+          ...value,
+          id: data.id,
+          workingFields: workingFields,
+        };
+        if (res?.data?.fileName) {
+          body.image = `/upload/${res?.data?.fileName}`;
+        }
+        handleUpdate(body);
         handleClose();
-      } else {
-        toast.error("پروفایل پزشک ضروری است");
+        reset();
+        setImageSrc(() => "");
       }
     },
     (error) => {
       console.log("the error is", error);
     }
   );
-  useErrorHandling({ isError: isSubmitError, isSuccess: isSubmitSuccess });
+  useErrorHandling({
+    isError: isSubmitError || updateData.isError,
+    isSuccess: isSubmitSuccess || updateData.isError,
+    errorMessage:
+      ((error as FetchBaseQueryError)?.data as IError)?.message ||
+      ((isUploadImageError as FetchBaseQueryError)?.data as IError)?.message ||
+      ((updateData.error as FetchBaseQueryError)?.data as IError)?.message,
+  });
 
-  console.log("isSubmitLoading", isSubmitLoading);
   const handleOnChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files && e?.target?.files.length > 0)
       setImageSrc(() => URL.createObjectURL(e?.target?.files[0]));
-
-    console.log(imageSrc);
   };
   return (
     <Modal
@@ -196,7 +248,12 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose }) => {
           multiline={true}
           rows={3}
         />
-        <Button loading={isSubmitLoading} type="submit">
+        <Button
+          loading={
+            isSubmitLoading || isUploadIconLoading || updateData.isLoading
+          }
+          type="submit"
+        >
           ساخت پزشک جدید
         </Button>
       </form>
