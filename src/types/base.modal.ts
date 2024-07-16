@@ -13,6 +13,11 @@ export interface IResponse<T> {
   data: T;
 }
 
+export type ActionApp<A, T> = {
+  type: A;
+  payload?: T | boolean;
+};
+
 export interface IDatasourcePageRes<T> {
   content: T[];
   count: number;

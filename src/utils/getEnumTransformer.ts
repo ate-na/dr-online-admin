@@ -1,3 +1,4 @@
+import { OrderStatus } from "../types/order.modal";
 import {
   EDegtreeOfEducation,
   EDegtreeOfEducationItems,
@@ -56,5 +57,16 @@ export const TherapistScheduleTypeTranslate = (type: TherapistScheduleType) => {
       return "آنلاین";
     case TherapistScheduleType.onsite:
       return "حضوری";
+  }
+};
+
+export const orderStatusTranslate = (status: OrderStatus) => {
+  switch (status) {
+    case OrderStatus.Cancel:
+      return "کنسل شده";
+    case OrderStatus.Done:
+      return "به اتمام رسیده";
+    case OrderStatus.Pending:
+      return "در انتظار برگزاری";
   }
 };

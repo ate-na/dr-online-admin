@@ -9,6 +9,7 @@ import Admin from "../pages/Admin";
 import Categories from "../pages/Categories";
 import Patient from "../pages/Patients";
 import TherapistScheduleChart from "../pages/Therapist-Schedule";
+import Orders from "../pages/Orders";
 
 const RoutesNavigation = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -28,6 +29,7 @@ const RoutesNavigation = () => {
               path="therapists/schedules/:therapistId/:day"
               element={<TherapistScheduleChart />}
             />
+            <Route element={<Orders />} path="/orders" />
           </Routes>
         </Layout>
       )}

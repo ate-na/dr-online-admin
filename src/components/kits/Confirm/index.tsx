@@ -1,7 +1,8 @@
-import { DialogActions } from "@mui/material";
+import { Box, DialogActions, Typography } from "@mui/material";
 import { TConfirm } from "./index.types";
 import Button from "../Button";
 import Modal from "../Modal";
+import FlexBox from "../FlexBox";
 
 const ConfirmModal: TConfirm = ({
   open,
@@ -12,25 +13,21 @@ const ConfirmModal: TConfirm = ({
   agreeHandler,
   cancelHandler,
   loading,
+  description,
 }) => {
-  console.log("modal", open);
   return (
-    <Modal
-      open={open}
-      handleClose={handleClose}
-      title={title}
-      height="25%"
-      p={4}
-      gap={5}
-    >
-      <DialogActions sx={{ width: "100%" }}>
-        <Button fullWidth onClick={cancelHandler} size="small">
-          {cancelTitle}
-        </Button>
-        <Button fullWidth loading={loading} onClick={agreeHandler} size="small">
-          {agreeTitle}
-        </Button>
-      </DialogActions>
+    <Modal open={open} handleClose={handleClose} title={title} p={4} gap={5}>
+      <Box>
+        {description && <Typography>{description}</Typography>}
+        <FlexBox pt={2} gap={2}>
+          <Button fullWidth onClick={cancelHandler} color="error">
+            {cancelTitle}
+          </Button>
+          <Button fullWidth loading={loading} onClick={agreeHandler}>
+            {agreeTitle}
+          </Button>
+        </FlexBox>
+      </Box>
     </Modal>
   );
 };

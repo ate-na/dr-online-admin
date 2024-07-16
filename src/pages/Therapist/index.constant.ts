@@ -1,6 +1,7 @@
 import { IColumns } from "../../components/kits/Table/index.types";
+import { ActionApp } from "../../types/base.modal";
 import { EGender, ITherapist } from "../../types/therapist.modal";
-import { ActionApp, Actions, IState } from "./index.types";
+import { Actions, IState } from "./index.types";
 
 export const TherapistColumns: IColumns[] = [
   { label: "id", name: "سریال پزشک" },
@@ -36,7 +37,10 @@ export const intialState = {
   openChangePasswordDialog: undefined,
 };
 
-export const reducer = (state: IState, action: ActionApp): IState => {
+export const reducer = (
+  state: IState,
+  action: ActionApp<Actions, ITherapist>
+): IState => {
   switch (action.type) {
     case Actions.CHART:
       return {
@@ -50,6 +54,10 @@ export const reducer = (state: IState, action: ActionApp): IState => {
       });
       return { ...state, openDetailDialog: action?.payload as ITherapist };
     case Actions.CREATE:
+      console.log("called create", {
+        ...state,
+        openCreateDialog: action?.payload as boolean,
+      });
       return { ...state, openCreateDialog: action?.payload as boolean };
     case Actions.EDIT:
       return { ...state, openEditDialog: action?.payload as ITherapist };

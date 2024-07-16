@@ -18,7 +18,7 @@ export const EDegtreeOfEducationItems = [
   { value: EDegtreeOfEducation.doctorate, label: "دکترا" },
 ];
 
-export enum ETherapistScheduleType {
+export enum ITherapistScheduleType {
   online = "online",
   onsite = "onsite",
   both = "both",

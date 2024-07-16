@@ -15,10 +15,7 @@ export interface IState {
   openChangePasswordDialog: ITherapist | undefined;
 }
 
-export type ActionApp = {
-  type: Actions;
-  payload?: ITherapist | boolean;
-};
+
 
 export enum Actions {
   CREATE = "Create",
