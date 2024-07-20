@@ -16,16 +16,20 @@ const ConfirmModal: TConfirm = ({
   description,
 }) => {
   return (
-    <Modal open={open} handleClose={handleClose} title={title} p={4} gap={5}>
+    <Modal open={open} handleClose={handleClose} title={title}>
       <Box>
         {description && <Typography>{description}</Typography>}
         <FlexBox pt={2} gap={2}>
-          <Button fullWidth onClick={cancelHandler} color="error">
-            {cancelTitle}
-          </Button>
-          <Button fullWidth loading={loading} onClick={agreeHandler}>
-            {agreeTitle}
-          </Button>
+          {cancelTitle && (
+            <Button fullWidth onClick={cancelHandler} color="error">
+              {cancelTitle}
+            </Button>
+          )}
+          {agreeTitle && (
+            <Button fullWidth loading={loading} onClick={agreeHandler}>
+              {agreeTitle}
+            </Button>
+          )}
         </FlexBox>
       </Box>
     </Modal>

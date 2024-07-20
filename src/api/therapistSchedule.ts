@@ -37,6 +37,17 @@ const TherapistScheduleApi = Api.injectEndpoints({
       },
       invalidatesTags: [provideTagsType.therapistSchedule],
     }),
+    TherapistSchedule: build.query<
+      TTherapistSchedulesPageRes,
+      number | undefined
+    >({
+      query(arg) {
+        return {
+          url: `therapist-schedules/therapist/${arg}?limit=5000`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -44,4 +55,5 @@ export const {
   useGetTherapistSchedulesPerDayQuery,
   useGetTherapistSchedulesChartDetailQuery,
   useDeleteTherapistScheduleMutation,
+  useTherapistScheduleQuery,
 } = TherapistScheduleApi;

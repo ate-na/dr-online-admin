@@ -67,7 +67,7 @@ const Table: TTable<any> = ({
   return (
     <>
       <FlexBox justifyContent="space-between" mb={2}>
-        <Typography width={"100%"}>{title}</Typography>
+        <Typography>{title}</Typography>
         <FlexBox justifyContent="flex-end">
           {isCreateButton && !handleFilter && !handleResetFilter && (
             <Button onClick={handleCreateButton}>{createLabel}</Button>

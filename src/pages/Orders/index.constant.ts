@@ -42,6 +42,7 @@ export const intialState = {
   openDoneDialog: undefined,
   openCancelDialog: undefined,
   openHealthFileDialog: undefined,
+  openCreateDialog: false,
 };
 
 export enum Actions {
@@ -67,6 +68,11 @@ export const reducer = (
       return {
         ...state,
         openHealthFileDialog: action?.payload as IOrderEntity,
+      };
+    case Actions.CREATE:
+      return {
+        ...state,
+        openCreateDialog: action?.payload as boolean,
       };
     default:
       return { ...state };

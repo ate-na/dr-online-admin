@@ -4,10 +4,10 @@ interface IConfirmProps {
   title: string;
   open: boolean;
   handleClose: () => void;
-  agreeTitle: string;
-  cancelTitle: string;
-  agreeHandler: () => void;
-  cancelHandler: () => void;
+  agreeTitle?: string;
+  cancelTitle?: string;
+  agreeHandler?: () => void;
+  cancelHandler?: () => void;
   loading?: boolean;
   description?: string;
 }

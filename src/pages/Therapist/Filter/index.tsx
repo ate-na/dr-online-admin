@@ -10,26 +10,20 @@ const FilterTherapist: TFilterTherapist = ({ handleClose, open = false }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { control, handleSubmit } = useForm<TFilterFormValidation>({
     values: {
-      firstName:searchParams.get('firstName') || undefined,
-      lastName:searchParams.get('lastName') || undefined,
-      phone:searchParams.get('phone') || undefined
+      firstName: searchParams.get("firstName") || undefined,
+      lastName: searchParams.get("lastName") || undefined,
+      phone: searchParams.get("phone") || undefined,
     },
   });
 
   const onSubmit = handleSubmit((value) => {
     console.log("value is", value);
     setSearchParams(() => prepareSearchParamsData(value));
-    handleClose()
+    handleClose();
   });
 
   return (
-    <Modal
-      width="30%"
-      height="40%"
-      title="فیلتر جدول"
-      open={open}
-      handleClose={handleClose}
-    >
+    <Modal width="30%" title="فیلتر جدول" open={open} handleClose={handleClose}>
       <form
         onSubmit={onSubmit}
         style={{

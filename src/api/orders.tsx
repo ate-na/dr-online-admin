@@ -7,7 +7,7 @@ const orderApi = Api.injectEndpoints({
     getOrders: build.query<TOrderPage, string>({
       query(args) {
         return {
-          url: "/orders/page",
+          url: `/orders/page?${args}`,
           method: "GET",
         };
       },

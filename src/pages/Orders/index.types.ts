@@ -10,4 +10,5 @@ export interface IState {
   openDoneDialog: IOrderEntity | undefined;
   openCancelDialog: IOrderEntity | undefined;
   openHealthFileDialog: IOrderEntity | undefined;
-}   
+  openCreateDialog: boolean;
+}

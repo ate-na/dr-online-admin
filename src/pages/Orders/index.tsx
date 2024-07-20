@@ -6,7 +6,6 @@ import {
 import Table from "../../components/kits/Table";
 import { Actions, intialState, OrderColumns, reducer } from "./index.constant";
 import { TOrders } from "./index.types";
-import { ITherapist } from "../../types/therapist.modal";
 import { useSearchParams } from "react-router-dom";
 import { IOrderEntity, OrderStatus } from "../../types/order.modal";
 import ConfirmModal from "../../components/kits/Confirm";
@@ -14,9 +13,14 @@ import toast from "react-hot-toast";
 import useErrorHandling from "../../hooks/useErrorHandling";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { IError } from "../../types/base.modal";
+import FilterDialog from "./FilterDialog";
+import useGetSearchParamsFilter from "../../hooks/useGetSearchParamsFilter";
+import CreateOrder from "./CreateDialog";
 
 const Orders: TOrders = () => {
-  const { data, isLoading, refetch } = useGetOrdersQuery("");
+  const { data, isLoading, refetch } = useGetOrdersQuery(
+    useGetSearchParamsFilter({ isObject: true })
+  );
   const [state, dispatch] = useReducer(reducer, intialState);
 
   const [_, setSearchParams] = useSearchParams();
@@ -53,6 +57,14 @@ const Orders: TOrders = () => {
     type: Actions,
     value?: IOrderEntity | undefined
   ) => {
+    if (type === Actions.HEALTHFILE) {
+      if (value?.status !== OrderStatus.Done) {
+        toast.error(
+          "برای نمایش پرونده سلامت باید وضعیت رزرو به اتمام رسیده باشد"
+        );
+        return;
+      }
+    }
     const notValid = value && handleValidationOpen(type, value);
     if (notValid) return;
     dispatch({
@@ -138,6 +150,20 @@ const Orders: TOrders = () => {
             ? "آیا از کنسل کردن این رزرو اطمینان دارید"
             : "آیا از تغییر وضعیت رزرو به به اتمام رسیده اطمینان دارید ؟؟؟"
         }
+      />
+      <ConfirmModal
+        open={!!state.openHealthFileDialog}
+        handleClose={handleClose.bind(null, Actions.HEALTHFILE)}
+        title="پرونده سلامت"
+        description="شما لیستی از داکیومنت های آپلود شده برای این نوبت رزرو را مشاهده میکنید, برای دیدن فایل داکیومنت کلیک کنید"
+      />
+      <FilterDialog
+        open={state.openFilterDialog}
+        handleClose={handleClose.bind(null, Actions.FILTER)}
+      />
+      <CreateOrder
+        handleClose={handleClose.bind(null, Actions.CREATE)}
+        open={!!state.openCreateDialog}
       />
     </>
   );
