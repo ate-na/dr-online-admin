@@ -54,7 +54,7 @@ const Table: TTable<any> = ({
       return (
         <img
           style={{ width: "4rem" }}
-          src={"https://pyschologist-api.liara.run/upload/" + value}
+          src={"http://localhost:4000/upload/" + value}
         />
       );
     else if (el.isImage && !value) return "no image";

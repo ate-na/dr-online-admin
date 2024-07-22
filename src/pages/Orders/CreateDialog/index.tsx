@@ -7,18 +7,21 @@ import Modal from "../../../components/kits/Modal";
 import Select from "../../../components/kits/Select";
 import { TCreateOrder, TCreateOrderForm } from "./index.types";
 import Button from "../../../components/kits/Button";
-import { useEffect } from "react";
 import { createFormValidation } from "./index.constant";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getDaysOfWeekTransalate } from "../../../utils/getEnumTransformer";
+import { useGetReservationDateBaseTherapistQuery } from "../../../api/orders";
+import { useGetCategoriesQuery } from "../../../api/categories";
 
 const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
-  const { control, getValues, handleSubmit, watch } = useForm<TCreateOrderForm>(
-    { resolver: zodResolver(createFormValidation) }
-  );
+  const { control, handleSubmit, watch } = useForm<TCreateOrderForm>({
+    resolver: zodResolver(createFormValidation),
+  });
   const therapistId = watch("therapist");
   const patientId = watch("patient");
   const schedule_day = watch("day");
+  const time = watch("time");
+  const date = watch("date");
 
   const { data: therapits } = useGetAllTherapistQuery("limit=10000");
   const { data: patients } = useGetAllPatientQuery("limit=5000");
@@ -29,6 +32,16 @@ const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
       refetchOnMountOrArgChange: true,
     }
   );
+  const { data: reserveTimes } = useGetReservationDateBaseTherapistQuery(
+    { time, day: schedule_day, therapistId: therapistId },
+    {
+      skip: !therapistId || !time || !schedule_day,
+      refetchOnMountOrArgChange: true,
+    }
+  );
+  const { data: categories } = useGetCategoriesQuery("limit=5000", {
+    skip: !date,
+  });
 
   const PATIENT_SELECT_OPTIONS =
     patients?.content.map((e: any) => ({
@@ -41,8 +54,6 @@ const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
       label: `${e.firstName} ${e.lastName}`,
       value: e.id,
     })) || [];
-
-  console.log("therapist", schedules);
 
   const THERAPIST_SCHEDULE_DAY_SELECT_OPTIONS = schedules?.content.reduce(
     (pre: any[], current) => {
@@ -61,6 +72,13 @@ const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
   const TIME_SELECT_OPTIONS = schedules?.content
     .filter((el) => el.day === schedule_day)
     .map((el) => ({ label: `${el.startHour}_${el.endHour}`, value: el.id }));
+
+  const DATE_SELECT_OPTIONS = reserveTimes?.map((el) => ({
+    label: el,
+    value: el,
+  }));
+
+  const CATEGORIES_SELECT_OPTIONS=categories?.content.map((el)=>({label:el.enName,value:el.id}))
 
   const onSubmitHandler = handleSubmit((value) => {});
   return (
@@ -81,7 +99,7 @@ const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
           />
         </FlexBox>
         <FlexBox gap={2}>
-          <Select
+        <Select
             items={THERAPIST_SCHEDULE_DAY_SELECT_OPTIONS || []}
             name="day"
             control={control}
@@ -94,6 +112,23 @@ const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
             selectLabel="بازه زمانی"
             control={control}
             disabled={!schedule_day}
+          />
+        </FlexBox>
+
+        <FlexBox gap={2}>
+          <Select
+            items={DATE_SELECT_OPTIONS || []}
+            name="date"
+            control={control}
+            selectLabel="تاریخ برگزاری"
+            disabled={!time}
+          />
+          <Select
+            items={TIME_SELECT_OPTIONS || []}
+            name="categories"
+            selectLabel="زمینه های تخصصی"
+            control={control}
+            disabled={!time}
           />
         </FlexBox>
 

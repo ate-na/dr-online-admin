@@ -72,7 +72,7 @@ const CreateCategory: TCreateCategory = ({
   useEffect(() => {
     if (data?.icon)
       setImageSrc(
-        () => "https://pyschologist-api.liara.run/upload/" + data.icon
+        () => "http://localhost:4000/upload/" + data.icon
       );
   }, [data]);
 
