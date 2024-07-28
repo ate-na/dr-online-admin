@@ -1,11 +1,14 @@
+import { useReducer } from "react";
 import { useGetAllTicketsQuery } from "../../api/ticket";
 import Table from "../../components/kits/Table";
 import useGetSearchParamsFilter from "../../hooks/useGetSearchParamsFilter";
-import { ticketColumns } from "./index.contant";
+import { initalState, reducer, ticketColumns } from "./index.contant";
 import { TTicket } from "./index.types";
 
 const Tickets: TTicket = () => {
-  const { refetch, data,isLoading } = useGetAllTicketsQuery(
+  const [state, dispatch] = useReducer(reducer, initalState);
+
+  const { refetch, data, isLoading } = useGetAllTicketsQuery(
     useGetSearchParamsFilter({ isObject: false })
   );
 

@@ -1,7 +1,9 @@
 import { IColumns } from "../../components/kits/Table/index.types";
+import { ITicket } from "../../types/ticket.modal";
 import { ticketStatusTranslate } from "../../utils/getEnumTransformer";
 import momentJalali from "moment-jalaali";
-import moment from "moment";
+import { Actions, IState } from "./index.types";
+import { ActionApp } from "../../types/base.modal";
 
 export const ticketColumns: IColumns[] = [
   { name: "سریال تیکت", label: "id" },
@@ -45,7 +47,28 @@ export const ticketColumns: IColumns[] = [
     name: "تاریخ ثبت پاسخ",
     label: "answerAt",
     transform(data) {
-      return data.answerAt ?  momentJalali(data.answerAt).format("jYYYY/jM/jD HH:mm") :"-";
+      return data.answerAt
+        ? momentJalali(data.answerAt).format("jYYYY/jM/jD HH:mm")
+        : "-";
     },
   },
 ];
+
+export const initalState = {
+  openDeleteDialog: {},
+  closeTicket: {},
+  showTicket: {},
+};
+
+export const reducer = (state: IState, action: ActionApp<Actions, ITicket>) => {
+  switch (action.type) {
+    case Actions.CLOSE:
+      return { ...state, closeTicket: action.payload as any };
+    case Actions.DELETE:
+      return { ...state, openDeleteDialog: action.payload as any };
+    case Actions.SHOW:
+      return { ...state, showTicket: action.payload as any };
+    default:
+      return { ...state };
+  }
+};
