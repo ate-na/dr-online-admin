@@ -5,6 +5,7 @@ import {
   EGender,
   TherapistScheduleType,
 } from "../types/therapist.modal";
+import { TicketStatus } from "../types/ticket.modal";
 
 export const getGenderEnum = (data: EGender | undefined) => {
   switch (data) {
@@ -68,5 +69,16 @@ export const orderStatusTranslate = (status: OrderStatus) => {
       return "به اتمام رسیده";
     case OrderStatus.Pending:
       return "در انتظار برگزاری";
+  }
+};
+
+export const ticketStatusTranslate = (status: TicketStatus) => {
+  switch (status) {
+    case TicketStatus.Close:
+      return "بسته شده";
+    case TicketStatus.Open:
+      return "درانتظار";
+    case TicketStatus.Report:
+      return "گزارش شده";
   }
 };
