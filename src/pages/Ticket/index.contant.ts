@@ -55,9 +55,9 @@ export const ticketColumns: IColumns[] = [
 ];
 
 export const initalState = {
-  openDeleteDialog: {},
-  closeTicket: {},
-  showTicket: {},
+  openDeleteDialog: undefined,
+  closeTicket: undefined,
+  showTicket: undefined,
 };
 
 export const reducer = (state: IState, action: ActionApp<Actions, ITicket>) => {

@@ -6,9 +6,9 @@ export interface ITicketProps {}
 export type TTicket = FC<ITicketProps>;
 
 export interface IState {
-  openDeleteDialog?: ITicket | undefined;
-  closeTicket?: ITicket | undefined;
-  showTicket?: TTicket | undefined;
+  openDeleteDialog: ITicket | undefined;
+  closeTicket: ITicket | undefined;
+  showTicket: TTicket | undefined;
 }
 
 export enum Actions {

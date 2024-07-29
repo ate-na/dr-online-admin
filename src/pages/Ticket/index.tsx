@@ -3,7 +3,8 @@ import { useGetAllTicketsQuery } from "../../api/ticket";
 import Table from "../../components/kits/Table";
 import useGetSearchParamsFilter from "../../hooks/useGetSearchParamsFilter";
 import { initalState, reducer, ticketColumns } from "./index.contant";
-import { TTicket } from "./index.types";
+import { Actions, TTicket } from "./index.types";
+import { ITicket } from "../../types/ticket.modal";
 
 const Tickets: TTicket = () => {
   const [state, dispatch] = useReducer(reducer, initalState);
@@ -11,6 +12,15 @@ const Tickets: TTicket = () => {
   const { refetch, data, isLoading } = useGetAllTicketsQuery(
     useGetSearchParamsFilter({ isObject: false })
   );
+
+  const handleClose = () => {};
+
+  const handleOpen = (
+    action: Actions,
+    value: ITicket | undefined | boolean,
+  ) => {
+    console.log("the value is", value, action);
+  };
 
   return (
     <>
@@ -24,6 +34,7 @@ const Tickets: TTicket = () => {
         count={data?.count}
         isDelete={true}
         loading={isLoading}
+        handleDelete={handleOpen.bind(null,Actions.DELETE)}
       />
     </>
   );
