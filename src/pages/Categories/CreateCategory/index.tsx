@@ -23,7 +23,6 @@ const CreateCategory: TCreateCategory = ({
   handleClose,
   data,
 }) => {
-  console.log("data", data);
   const { control, handleSubmit, reset } = useForm({
     resolver: zodResolver(createCategoryValidation),
     values: { ...data },
@@ -42,7 +41,6 @@ const CreateCategory: TCreateCategory = ({
         const { data: uploadIcos } = await uploadIconHandler({
           icon: ref.current.files[0],
         });
-        console.log("data ", data);
         if (uploadIcos?.fileName) {
           if (data) {
             updateHandler({ ...value, icon: uploadIcos.fileName, id: data.id });
@@ -71,9 +69,7 @@ const CreateCategory: TCreateCategory = ({
 
   useEffect(() => {
     if (data?.icon)
-      setImageSrc(
-        () => "http://localhost:4000/upload/" + data.icon
-      );
+      setImageSrc(() => import.meta.env.VITE_IMAGE_URL + data.icon);
   }, [data]);
 
   const closeModal = () => {
@@ -90,8 +86,6 @@ const CreateCategory: TCreateCategory = ({
   const handleOnChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files && e?.target?.files.length > 0)
       setImageSrc(() => URL.createObjectURL(e?.target?.files[0]));
-
-    console.log(imageSrc);
   };
 
   useErrorHandling({

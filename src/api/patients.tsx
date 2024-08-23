@@ -6,7 +6,6 @@ const PatientSlice = Api.injectEndpoints({
   endpoints: (build) => ({
     getAllPatient: build.query<IPatientPageRes, string>({
       query: (query: string) => {
-        console.log("query", query);
         return {
           url: `/Patient${query ? `?${query}` : ""}`,
         };

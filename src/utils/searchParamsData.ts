@@ -25,7 +25,6 @@ export const prepareObjectSearchParamsFilters = <T extends URLSearchParams>(
   const query: Object[] = [];
   data.forEach((value, key) => {
     if (value && key && value !== "undefined" && key !== "page") {
-      console.log("calleds", `${key}.eq=${value}`);
       query.push(`${key}.eq=${value}`);
     } else if (key === "page") {
       query.push(`${key}=${+value - 1}`);

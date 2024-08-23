@@ -13,7 +13,6 @@ const useErrorHandling = ({
   isLoading?: boolean;
 }) => {
   useEffect(() => {
-    console.log("call2222ed", isError, isSuccess);
     if (isSuccess) {
       toast.success("با موفقیت انجام شده است");
     } else if (isError) {

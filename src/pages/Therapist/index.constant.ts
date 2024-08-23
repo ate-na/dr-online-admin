@@ -48,16 +48,8 @@ export const reducer = (
         openChartReserveDetail: action?.payload as ITherapist,
       };
     case Actions.DETAIL:
-      console.log("called", {
-        ...state,
-        openDetailDialog: action?.payload as ITherapist,
-      });
       return { ...state, openDetailDialog: action?.payload as ITherapist };
     case Actions.CREATE:
-      console.log("called create", {
-        ...state,
-        openCreateDialog: action?.payload as boolean,
-      });
       return { ...state, openCreateDialog: action?.payload as boolean };
     case Actions.EDIT:
       return { ...state, openEditDialog: action?.payload as ITherapist };

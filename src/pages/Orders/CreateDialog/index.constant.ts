@@ -13,7 +13,7 @@ export const createFormValidation = Zod.object({
   day: Zod.number({
     required_error: "روزی که قصد دریافت نوبت رزرو را دارید انتخاب کنید",
   }),
-  location: Zod.number({}).optional(),
+  location: Zod.string({}).optional(),
   room: Zod.number({}).optional(),
   date: Zod.string({ required_error: "تاریخ برگزاری این رزرو را انتخاب کنید" }),
   endHour: Zod.string({}).optional(),

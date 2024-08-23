@@ -16,8 +16,8 @@ const Select: TSelect = ({
   control,
   disabled = false,
   defaultValue,
+  multiple = false,
 }) => {
-  console.log(disabled);
   return (
     <>
       <Controller
@@ -35,6 +35,7 @@ const Select: TSelect = ({
                 label={selectLabel}
                 error={!!error}
                 {...field}
+                multiple={multiple}
               >
                 {items.map((element) => (
                   <MenuItem key={element.label} value={element.value}>

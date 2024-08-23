@@ -27,10 +27,7 @@ const TherapistApi = Api.injectEndpoints({
       },
       invalidatesTags: [provideTagsType.therapist],
     }),
-    updateTherapist: build.mutation<
-      void,
-      Partial<ITherapist>
-    >({
+    updateTherapist: build.mutation<void, Partial<ITherapist>>({
       query: (arg) => {
         return {
           url: `/therapist/${arg.id}`,
@@ -49,6 +46,14 @@ const TherapistApi = Api.injectEndpoints({
       },
       invalidatesTags: [provideTagsType.therapist],
     }),
+    getTherapistById: build.query<ITherapist, number>({
+      query(arg) {
+        return {
+          url: `/therapist/${arg}`,
+          method: "GET",
+        };
+      },
+    }),
   }),
 });
 
@@ -57,4 +62,5 @@ export const {
   useCreateTherapistMutation,
   useUpdateTherapistMutation,
   useDeleteTherapitMutation,
+  useGetTherapistByIdQuery,
 } = TherapistApi;

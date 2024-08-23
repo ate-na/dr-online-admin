@@ -9,6 +9,7 @@ interface ITextFieldProps {
   rows?: number;
   multiline?: boolean;
   type?: React.HTMLInputTypeAttribute;
+  disabled?: boolean;
 }
 
 export type TTextFieldFC = FC<ITextFieldProps>;

@@ -18,7 +18,7 @@ const Header: THeaderType = () => {
               {authCtx.user?.firstName} {authCtx.user?.lastName}
             </Typography>
             {APP_HEADER_MENU_ITEMS.map((e) => (
-              <Link to={e.to}>
+              <Link to={e.to} key={e.name}>
                 <Typography component={"h1"} variant="body1">
                   {e.name}
                 </Typography>

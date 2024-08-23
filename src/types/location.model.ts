@@ -14,6 +14,7 @@ export interface ILocation {
   id: number;
   city: string;
   address: string;
+  room?: number;
 }
 
 export type TLocationPageRes = IDatasourcePageRes<ILocation>;

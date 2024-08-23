@@ -21,7 +21,6 @@ const FilterDialog: TFilerDialog = ({ open = false, handleClose }) => {
   const [_, setSearchParams] = useSearchParams("");
   const onSubmit = handleSubmit(
     (value) => {
-      console.log("value is", value);
       setSearchParams(() => prepareSearchParamsData(value));
       handleClose();
     },

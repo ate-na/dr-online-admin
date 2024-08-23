@@ -27,7 +27,6 @@ const ChangePasswordDialog: TChangePasswordDialog = ({
 
   const onSubmitForm = handleSubmit(
     async (value) => {
-      console.log("value is", value);
       if (value && data?.id) {
         const res = await handleUpdatePassword({ id: data?.id, ...value });
         console.log(res.data?.message);

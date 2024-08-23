@@ -63,11 +63,18 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
 
   const { classes } = createAvatarStyle();
 
+  const CATEGORY_SELECT_OPTIONS = categories?.content.map((e) => ({
+    value: e.id,
+    label: e.faName,
+  }));
+
   useEffect(() => {
+    console.log("envvv", import.meta.env.BASE_URL);
     setImageSrc(() =>
       data?.image ? `https://pyschologist-api.liara.run${data?.image}` : ""
     );
   }, [data]);
+  console.log("envvv", import.meta.env.VITE_BASE_URL);
 
   const onSubmitHandler = handleSubmit(
     async (value) => {
@@ -80,16 +87,11 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
         ) {
           const res = await uploadFile({ icon: ref.current.files[0] });
           if (!res?.data) toast.error("فرایند با شکست مواجه شد");
-          const workfiled = categories?.content.find(
-            (e) => e.faName.trim() === value.workingFields.trim()
-          )?.id;
-          const workingFields = workfiled ? [workfiled] : [];
 
           if (res.data?.fileName)
             submit({
               ...value,
               image: `/upload/${res.data?.fileName}`,
-              workingFields: workingFields,
               password: value.phone,
             });
           handleClose();
@@ -215,15 +217,10 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
             control={control}
             name="workingFields"
             selectLabel="زمینه کاری پزشک"
-            items={
-              (categories?.content &&
-                categories?.content.map((e) => ({
-                  label: e.faName,
-                  value: e.faName,
-                }))) ||
-              []
-            }
+            items={CATEGORY_SELECT_OPTIONS || []}
             disabled={isCategoryLoading}
+            multiple={true}
+            defaultValue={[]}
           />
         </FlexBox>
         <Select

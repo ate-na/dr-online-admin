@@ -22,7 +22,7 @@ export const getDegreeEnum = (data: EDegtreeOfEducation | undefined) => {
   return EDegtreeOfEducationItems.find((e) => e.value === data)?.label;
 };
 
-export const getDaysOfWeekTransalate = (dayOfWeek: number) => {
+export const getDaysOfWeekTransalate = (dayOfWeek?: number) => {
   switch (dayOfWeek) {
     case getDaysOfWeek.monday:
       return "دوشنبه";
@@ -38,6 +38,8 @@ export const getDaysOfWeekTransalate = (dayOfWeek: number) => {
       return "شنبه";
     case getDaysOfWeek.sunday:
       return "یک شنبه";
+    default:
+      return "";
   }
 };
 

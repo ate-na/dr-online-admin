@@ -32,7 +32,6 @@ const Categories: TCategoryType = () => {
     isSuccess: deleteData.isSuccess,
   });
   const clearFilterHandler = () => {
-    console.log("clearFilterHandler");
     setSearchParams(() => {});
   };
 
@@ -48,11 +47,9 @@ const Categories: TCategoryType = () => {
     setOpenFilterDialog(() => true);
   };
   const addNewCategoryHandler = () => {
-    console.log("addNewCategoryHandler");
     setOpenCreateForm(() => true);
   };
   const handleCloseCreateForm = () => {
-    console.log("handleCloseCreateForm");
     setOpenCreateForm(() => false);
     setUpdateCreateForm(() => {});
   };
@@ -71,7 +68,6 @@ const Categories: TCategoryType = () => {
     }
   };
   const cancelDeleteHandler = () => {
-    console.log("called", openDeleteDialg);
     setOpenDeleteDialg(() => undefined);
   };
 

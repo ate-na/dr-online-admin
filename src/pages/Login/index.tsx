@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
@@ -14,19 +14,23 @@ import { TLoginFC } from "./index.type";
 import FlexBox from "../../components/kits/FlexBox";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import Button from "../../components/kits/Button";
 
 const Login: TLoginFC = () => {
   const { classes } = useLoginStyles();
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(loginFormValidation),
   });
+  const [loading, setLoading] = useState<boolean>(false);
 
   const AuthCtx = useAuth();
 
   const onSubmit = handleSubmit((data) => {
     console.log("onsubmit called", data);
+    setLoading(() => true);
     AuthCtx.Login(data as any);
-    toast.success("");
+    setLoading(() => false);
   });
 
   return (
@@ -62,7 +66,7 @@ const Login: TLoginFC = () => {
                 label="گذرواژه"
                 helperText="گذرواژه شما باید 8 حرف داشته باشد"
               />
-              <Button type="submit" fullWidth>
+              <Button loading={loading} type="submit" fullWidth>
                 ورود به حساب
               </Button>
             </FlexBox>

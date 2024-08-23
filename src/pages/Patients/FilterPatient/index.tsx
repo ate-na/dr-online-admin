@@ -23,7 +23,6 @@ const FilterPatientDialog: TFilterPatient = ({ open = false, handleClose }) => {
 
   const submitHandler = handleSubmit(
     (value) => {
-      console.log("the value is", value);
       setSearchParams(() => prepareSearchParamsData(value) || {});
       handleClose();
     },

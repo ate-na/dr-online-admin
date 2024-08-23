@@ -63,7 +63,6 @@ const Admin: TAdmin = () => {
   };
 
   const changePasswordHandler = (data: IAdmin) => {
-    console.log("the admin is", data);
     setOpenChangePasswordDialog(() => data);
   };
   const handleCloseChangePassword = () => {

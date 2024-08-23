@@ -37,7 +37,7 @@ export interface ICreateOrder {
   room: number;
   startHour: string;
   time: string;
-  type: ITherapistScheduleType;
+  type: string;
 }
 
 export interface IUpdateStatus {

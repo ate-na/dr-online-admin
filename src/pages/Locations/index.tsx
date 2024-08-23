@@ -49,33 +49,24 @@ const Location: TLocationType = () => {
     setOpenDeleteDialg(() => undefined);
   };
   const cancelDeleteHandler = () => {
-    console.log("called", openDeleteDialg);
     setOpenDeleteDialg(() => undefined);
   };
 
   const HandleEdit = (data: ILocation) => {
-    console.log(data);
     setUpdateDialogOpen(() => data);
   };
 
   const HandleCreateButton = () => {
-    console.log("called");
     setCreateDialogOpen(() => true);
   };
 
   const HandleClose = () => {
-    console.log("HandleClose");
     setCreateDialogOpen(() => false);
     setUpdateDialogOpen(() => undefined);
   };
 
-
-
   if (isLoading) return <LinearProgress />;
 
-  {
-    console.log("updateDialogOpen", updateDialogOpen);
-  }
   return (
     <>
       <CreateLocation

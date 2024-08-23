@@ -10,20 +10,27 @@ import { ITherapistSchedules } from "../../types/therapist.modal";
 import ConfirmModal from "../../components/kits/Confirm";
 import { useParams } from "react-router-dom";
 import { getDaysOfWeekTransalate } from "../../utils/getEnumTransformer";
+import CreateTherapistSchedule from "./CreateTherapistSchedule";
+import { useGetTherapistByIdQuery } from "../../api/therapist";
 
 const TherapistScheduleChart: TTherapistSchedulesChart = ({}) => {
-  const params = useParams();
-  console.log("searchParams", params);
+  const { therapistId, day } = useParams<{
+    day: string;
+    therapistId: string;
+  }>();
   const [openDeleteDialog, setOpenDeleteDialog] = useState<
     ITherapistSchedules | undefined
   >();
+  const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const { data, refetch, isLoading } = useGetTherapistSchedulesChartDetailQuery(
     {
-      therapist: +params.therapistId as any,
-      day: +params.day as any,
+      therapist: therapistId ? +therapistId : undefined,
+      day: day ? +day : undefined,
     }
   );
   const [submit, deleteData] = useDeleteTherapistScheduleMutation();
+
+  const { data: therapist } = useGetTherapistByIdQuery(+therapistId || 0);
 
   const handleDelete = (value: ITherapistSchedules) => {
     setOpenDeleteDialog(() => value);
@@ -42,14 +49,24 @@ const TherapistScheduleChart: TTherapistSchedulesChart = ({}) => {
     setOpenDeleteDialog(() => undefined);
   };
 
+  const handleCreateButton = () => {
+    setOpenCreateDialog(() => true);
+  };
+
+  console.log("therapist", therapist);
+
+  const title = () => {
+    return `چارت رزرو ${therapist?.firstName} ${
+      therapist?.lastName
+    } در روز های ${getDaysOfWeekTransalate(day ? +day : undefined)}`;
+  };
+
   return (
     <>
       <Table
         dataKey="id"
         rows={data?.content || []}
-        title={`چارت رزرو نیلوفر نیک پوری در روز ${getDaysOfWeekTransalate(
-          +params.day
-        )}`}
+        title={title()}
         columns={TherapistScheduleColumns}
         refetch={refetch}
         count={data?.count}
@@ -57,6 +74,9 @@ const TherapistScheduleChart: TTherapistSchedulesChart = ({}) => {
         isDelete={true}
         handleDelete={handleDelete}
         totalPage={data?.count}
+        isCreateButton={true}
+        createLabel="ساخت آیتم جدید"
+        handleCreateButton={handleCreateButton}
       />
       <ConfirmModal
         agreeHandler={deleteHandler}
@@ -67,6 +87,12 @@ const TherapistScheduleChart: TTherapistSchedulesChart = ({}) => {
         title="آیا از حذف این آیتم اطمینان دارید؟"
         open={!!openDeleteDialog}
         loading={deleteData.isLoading}
+      />
+      <CreateTherapistSchedule
+        therapist={therapist}
+        dayOfWeek={day ? +day : undefined}
+        open={openCreateDialog}
+        handleClose={() => setOpenCreateDialog(() => false)}
       />
     </>
   );

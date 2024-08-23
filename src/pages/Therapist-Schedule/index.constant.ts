@@ -25,7 +25,6 @@ export const TherapistScheduleColumns: IColumns[] = [
     label: "location",
     name: "آدرس برگزاری",
     transform(data) {
-      console.log(data);
       return data?.location?.address;
     },
   },

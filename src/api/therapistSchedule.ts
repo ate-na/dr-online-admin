@@ -21,7 +21,7 @@ const TherapistScheduleApi = Api.injectEndpoints({
 
     getTherapistSchedulesChartDetail: build.query<
       TTherapistSchedulesPageRes,
-      { day: number; therapist: number }
+      { day?: number; therapist?: number }
     >({
       query(arg) {
         return `therapist-schedules/therapist/${arg?.therapist}/day/${arg?.day}`;

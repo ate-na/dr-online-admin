@@ -12,5 +12,6 @@ interface ISelectProps {
   control: any;
   disabled?: boolean;
   defaultValue?: any;
+  multiple?: boolean;
 }
 export type TSelect = FC<ISelectProps>;

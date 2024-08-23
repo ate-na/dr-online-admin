@@ -6,7 +6,6 @@ const AdminSlice = Api.injectEndpoints({
   endpoints: (build) => ({
     getAllAdmin: build.query<TAdminPageRes, string>({
       query: (query: string) => {
-        console.log("query", query);
         return {
           url: `/admin${query ? `?${query}` : ""}`,
         };

@@ -21,7 +21,6 @@ const CreateLocation: TCreateLocation = ({
   data,
 }) => {
   const { cities, cityLoading } = useCities();
-  console.log(" the data", { ...data });
   const { control, handleSubmit, reset, setValue } = useForm<
     Partial<ILocation>
   >({
@@ -36,7 +35,6 @@ const CreateLocation: TCreateLocation = ({
       setValue("address", data.address);
       setValue("city", data.city);
     }
-    console.log("dataaaa is", data);
   }, [data]);
 
   useErrorHandling({
@@ -46,7 +44,6 @@ const CreateLocation: TCreateLocation = ({
 
   const onSubmit = handleSubmit(
     async (value: any) => {
-      console.log("value is", value);
       if (data && data.id) {
         await handleSubmitUpdateHandler({ ...value, id: data?.id });
       } else {

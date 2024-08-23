@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { IAdmin, ILoginProps } from "../types/admin.modal";
 import { IAuthContext, TAuthContextProvider } from "./index.types";
 import { useLoginMutation } from "../api/user";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext<IAuthContext>({
   isLoggedIn: false,
@@ -22,15 +23,13 @@ export const AuthContextProvider: TAuthContextProvider = ({ children }) => {
   const [submit] = useLoginMutation();
 
   const Login = async (data: ILoginProps) => {
-    console.log("called login");
     const res = await submit(data);
-    console.log("res called login", res);
     if (res?.data?.user && res?.data?.token) {
-      console.log("hiii");
       setUser(() => res.data.user);
       setToken(() => res.data.token);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res?.data?.user));
+      toast.success("ورود به حساب کاربری با موفقیت انجام شد");
     }
   };
 

@@ -17,7 +17,6 @@ const FilterTherapist: TFilterTherapist = ({ handleClose, open = false }) => {
   });
 
   const onSubmit = handleSubmit((value) => {
-    console.log("value is", value);
     setSearchParams(() => prepareSearchParamsData(value));
     handleClose();
   });

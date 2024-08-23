@@ -13,7 +13,7 @@ export const therapistValidation = zod.object({
   degreeOfEducation: zod.string({
     required_error: "مدرک تحصیلی پزشک را انتخاب کنید",
   }),
-  workingFields: zod.string({
+  workingFields: zod.array(zod.number(), {
     required_error: "باید حداقل یک زمینه تخصصی برای پزشک انتخاب کنید",
   }),
   gender: zod.string({ required_error: "جنسیت پزشک را پر کنید" }),

@@ -68,7 +68,7 @@ export interface ITherapistSchedules extends IBaseEntity {
   startHour: string;
   endHour: string;
   location: ILocation;
-  type: ETherapistScheduleType;
+  type: TherapistScheduleType;
   room: number;
 }
 

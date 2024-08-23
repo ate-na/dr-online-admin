@@ -54,7 +54,7 @@ const Table: TTable<any> = ({
       return (
         <img
           style={{ width: "4rem" }}
-          src={"http://localhost:4000/upload/" + value}
+          src={import.meta.env.VITE_IMAGE_URL + value}
         />
       );
     else if (el.isImage && !value) return "no image";

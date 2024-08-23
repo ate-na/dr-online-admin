@@ -1,4 +1,9 @@
-import { IUpdateStatus, TOrderPage } from "../types/order.modal";
+import {
+  ICreateOrder,
+  IOrderEntity,
+  IUpdateStatus,
+  TOrderPage,
+} from "../types/order.modal";
 import { Api } from "./base";
 import { provideTagsType } from "./index.constant";
 
@@ -6,6 +11,10 @@ export interface IReservationDateBaseTherapist {
   therapistId: number;
   time: string;
   day: number;
+}
+
+export interface IResponsegetReservationDate {
+  dates: string[];
 }
 
 const orderApi = Api.injectEndpoints({
@@ -30,17 +39,33 @@ const orderApi = Api.injectEndpoints({
       invalidatesTags: [provideTagsType.orders],
     }),
     getReservationDateBaseTherapist: build.query<
-    string[],
-    IReservationDateBaseTherapist
-  >({
-    query(arg) {
-      return {
-        url: `orders/reservation-date/${arg.day}/${arg.therapistId}/${arg.time}`,
-        method: "GET",
-      };
-    },
-  }),
+      IResponsegetReservationDate,
+      IReservationDateBaseTherapist
+    >({
+      query(arg) {
+        return {
+          url: `orders/reservation-date/${arg.day}/${arg.therapistId}/${arg.time}`,
+          method: "GET",
+        };
+      },
+    }),
+
+    createOrder: build.mutation<IOrderEntity, ICreateOrder>({
+      query(arg) {
+        return {
+          url: "/orders",
+          method: "POST",
+          body: arg,
+        };
+      },
+      invalidatesTags: [provideTagsType.orders],
+    }),
   }),
 });
 
-export const { useGetOrdersQuery, useUpdateStatusOrderMutation,useGetReservationDateBaseTherapistQuery } = orderApi;
+export const {
+  useGetOrdersQuery,
+  useUpdateStatusOrderMutation,
+  useGetReservationDateBaseTherapistQuery,
+  useCreateOrderMutation,
+} = orderApi;
