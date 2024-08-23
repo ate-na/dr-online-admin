@@ -10,6 +10,7 @@ import Categories from "../pages/Categories";
 import Patient from "../pages/Patients";
 import TherapistScheduleChart from "../pages/Therapist-Schedule";
 import Orders from "../pages/Orders";
+import Tickets from "../pages/Ticket";
 
 const RoutesNavigation = () => {
   const { isLoggedIn } = useContext(AuthContext);
@@ -30,6 +31,7 @@ const RoutesNavigation = () => {
               element={<TherapistScheduleChart />}
             />
             <Route element={<Orders />} path="/orders" />
+            <Route element={<Tickets />} path="/tickets" />
           </Routes>
         </Layout>
       )}
