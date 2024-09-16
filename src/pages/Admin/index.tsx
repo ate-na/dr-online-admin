@@ -41,7 +41,7 @@ const Admin: TAdmin = () => {
   };
 
   const clearFilterHandler = () => {
-    setSearchParams(() => {});
+    setSearchParams(() => ({}));
   };
   const filterHandler = () => {
     setOpenFilterModal(() => true);

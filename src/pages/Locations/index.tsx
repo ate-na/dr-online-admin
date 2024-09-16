@@ -2,7 +2,7 @@ import { TLocationType } from "./index.types";
 import Table from "../../components/kits/Table";
 
 import { columns } from "./index.constant";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CreateLocation from "./CreateDialog";
 import {
   useDeleteLocationMutation,

@@ -85,7 +85,7 @@ const CreateCategory: TCreateCategory = ({
 
   const handleOnChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e?.target?.files && e?.target?.files.length > 0)
-      setImageSrc(() => URL.createObjectURL(e?.target?.files[0]));
+      setImageSrc(() => URL.createObjectURL((e?.target as any)?.files[0]));
   };
 
   useErrorHandling({

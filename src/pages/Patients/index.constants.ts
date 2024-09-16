@@ -18,4 +18,5 @@ export const x = zod.object({
   phone: zod
     .string({ message: "شماره تماس وارد شده فرمت نادرستی دارد" })
     .regex(/^(\+98|0)?9\d{9}$/, "شماره تماس وارد شده فرمت نادرستی دارد"),
+  password: zod.string().optional(),
 });

@@ -16,7 +16,7 @@ const CreateTherapistSchedule: TCreateTherapistSchedule = ({
   therapist,
   dayOfWeek,
 }) => {
-  const { handleSubmit, control, setValue } = useForm<TCreateTherapistForm>({
+  const { control, setValue } = useForm<TCreateTherapistForm>({
     resolver: zodResolver(createTherapistScheduleForm),
   });
 

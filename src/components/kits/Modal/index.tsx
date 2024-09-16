@@ -1,12 +1,6 @@
 import FlexBox from "../FlexBox";
 import { TModal } from "./index.types";
-import {
-  Box,
-  Icon,
-  IconButton,
-  Modal as MuiModal,
-  Typography,
-} from "@mui/material";
+import { Box, IconButton, Modal as MuiModal, Typography } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
 const Modal: TModal = ({
@@ -15,8 +9,8 @@ const Modal: TModal = ({
   title,
   bgcolor = "#282E34",
   children,
-  width='500px',
-  maxWidth='900px'
+  width = "500px",
+  maxWidth = "900px",
 }) => {
   return (
     <MuiModal open={open} onClose={handleClose}>
@@ -32,7 +26,7 @@ const Modal: TModal = ({
           borderRadius: "4px",
           maxHeight: "800px",
           overflowY: "auto",
-          maxWidth
+          maxWidth,
         }}
       >
         <FlexBox justifyContent="space-between" padding={1}>

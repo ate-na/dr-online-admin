@@ -23,7 +23,9 @@ const Categories: TCategoryType = () => {
     useGetSearchParamsFilter({ isObject: false })
   );
   const [openCreateForm, setOpenCreateForm] = useState<boolean>(false);
-  const [updateCreateForm, setUpdateCreateForm] = useState<ICategory>();
+  const [updateCreateForm, setUpdateCreateForm] = useState<
+    ICategory | undefined
+  >();
   const [openFilterDialg, setOpenFilterDialog] = useState<boolean>(false);
   const [_, setSearchParams] = useSearchParams();
 
@@ -32,7 +34,7 @@ const Categories: TCategoryType = () => {
     isSuccess: deleteData.isSuccess,
   });
   const clearFilterHandler = () => {
-    setSearchParams(() => {});
+    setSearchParams(() => ({}));
   };
 
   const handleCloseFilterDialog = () => {
@@ -51,7 +53,7 @@ const Categories: TCategoryType = () => {
   };
   const handleCloseCreateForm = () => {
     setOpenCreateForm(() => false);
-    setUpdateCreateForm(() => {});
+    setUpdateCreateForm(() => undefined);
   };
 
   const HandleDelete = (data: ICategory) => {

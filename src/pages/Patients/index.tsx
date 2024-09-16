@@ -44,7 +44,7 @@ const Patient: TPatient = () => {
   };
 
   const clearFilterHandler = () => {
-    setSearchParams(() => {});
+    setSearchParams(() => ({}));
   };
   const filterHandler = () => {
     setOpenFilterModal(() => true);

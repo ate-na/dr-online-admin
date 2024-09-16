@@ -11,8 +11,9 @@ import Patient from "../pages/Patients";
 import TherapistScheduleChart from "../pages/Therapist-Schedule";
 import Orders from "../pages/Orders";
 import Tickets from "../pages/Ticket";
+import { TRouteNavigation } from "./index.types";
 
-const RoutesNavigation = () => {
+const RoutesNavigation: TRouteNavigation = () => {
   const { isLoggedIn } = useContext(AuthContext);
   return (
     <>

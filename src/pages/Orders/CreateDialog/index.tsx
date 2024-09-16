@@ -17,7 +17,7 @@ import {
   useGetReservationDateBaseTherapistQuery,
 } from "../../../api/orders";
 import { useGetCategoriesQuery } from "../../../api/categories";
-import { useCallback, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import TextField from "../../../components/kits/TextField";
 import { Grid } from "@mui/material";
 import { ICreateOrder } from "../../../types/order.modal";
@@ -129,7 +129,7 @@ const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
       setValue("room", currentSchadule.room);
       setValue("location", currentSchadule.location.address);
     } else {
-      setValue("room", "");
+      setValue("room", undefined);
       setValue("location", "");
     }
   }, [currentSchadule]);
@@ -156,7 +156,7 @@ const CreateOrder: TCreateOrder = ({ open = false, handleClose }) => {
 
       console.log("the body is", body);
     },
-    (error) => {}
+    () => {}
   );
 
   useErrorHandling({

@@ -17,7 +17,6 @@ import {
 import Button from "../../../components/kits/Button";
 import {
   useCreateTherapistMutation,
-  useDeleteTherapitMutation,
   useUpdateTherapistMutation,
 } from "../../../api/therapist";
 import { Avatar, IconButton } from "@mui/material";
@@ -37,7 +36,12 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
       resolver: zodResolver(therapistValidation),
       values: {
         ...(data as any),
-        workingFields: data?.workingFields[0].faName,
+        workingFields: data
+          ? (data?.workingFields as any).map((e: any) => ({
+              label: e.faName,
+              value: e.value,
+            }))
+          : undefined,
       },
     }
   );
@@ -59,7 +63,9 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
     { isLoading: isUploadIconLoading, error: isUploadImageError },
   ] = useUploadIconsMutation();
 
-  const [handleUpdate, updateData] = useUpdateTherapistMutation(data?.id);
+  const [handleUpdate, updateData] = useUpdateTherapistMutation(
+    data?.id as any
+  );
 
   const { classes } = createAvatarStyle();
 
@@ -74,7 +80,6 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
       data?.image ? `https://pyschologist-api.liara.run${data?.image}` : ""
     );
   }, [data]);
-  console.log("envvv", import.meta.env.VITE_BASE_URL);
 
   const onSubmitHandler = handleSubmit(
     async (value) => {
@@ -87,6 +92,8 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
         ) {
           const res = await uploadFile({ icon: ref.current.files[0] });
           if (!res?.data) toast.error("فرایند با شکست مواجه شد");
+
+          console.log("valuesss", value);
 
           if (res.data?.fileName)
             submit({
@@ -105,13 +112,15 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
         if (ref.current?.files && ref.current.files.length > 0) {
           res = await uploadFile({ icon: ref.current.files[0] });
         }
+        console.log("value workfile", categories, value.workingFields);
 
-        const workfiled = categories?.content.find(
-          (e) => e.faName.trim() === value.workingFields.trim()
+        const workfiled = categories?.content.find((e) =>
+          value.workingFields.find((el) => e.id === el)
         )?.id;
+
         const workingFields = workfiled ? [workfiled] : [];
 
-        const body = {
+        const body: any = {
           ...value,
           id: data.id,
           workingFields: workingFields,
@@ -139,16 +148,13 @@ const CreateOrEdit: TCreateOrEditFC = ({ open = false, handleClose, data }) => {
   });
 
   const handleOnChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e?.target?.files && e?.target?.files.length > 0)
-      setImageSrc(() => URL.createObjectURL(e?.target?.files[0]));
+    const files = e.target?.files; // Safely get the files
+    if (files && files[0]) {
+      setImageSrc(() => URL.createObjectURL(files[0]));
+    }
   };
   return (
-    <Modal
-      title="ساخت پزشک جدید"
-      open={open}
-      handleClose={handleClose}
-      height="85%"
-    >
+    <Modal title="ساخت پزشک جدید" open={open} handleClose={handleClose}>
       <form
         style={{
           width: "100%",

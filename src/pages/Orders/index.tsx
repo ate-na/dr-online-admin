@@ -76,7 +76,7 @@ const Orders: TOrders = () => {
 
   const agreeConfirmHandler = () => {
     updateStatus({
-      id: state.openCancelDialog?.id || state.openDoneDialog?.id,
+      id: state.openCancelDialog?.id || (state.openDoneDialog?.id as number),
       status: !!state.openCancelDialog ? OrderStatus.Cancel : OrderStatus.Done,
     });
     handleClose(state.openCancelDialog ? Actions.CANCEL : Actions.DONE);

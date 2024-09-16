@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface ISelectItems {
-  value: number | string | boolean;
+  value: any;
   label: string;
 }
 interface ISelectProps {

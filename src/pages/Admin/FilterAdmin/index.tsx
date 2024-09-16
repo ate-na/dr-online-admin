@@ -21,14 +21,19 @@ const FilterAdminDialog: TFilterAdmin = ({ open = false, handleClose }) => {
 
   const submitHandler = handleSubmit(
     (value) => {
-      setSearchParams(() => prepareSearchParamsData(value) || {});
+      setSearchParams(() => (prepareSearchParamsData(value) as any) || {});
       handleClose();
     },
     (err) => console.log(err)
   );
 
   return (
-    <Modal height="60%" width="35%" open={open} handleClose={handleClose} title="جستجوی ادمین ها">
+    <Modal
+      width="35%"
+      open={open}
+      handleClose={handleClose}
+      title="جستجوی ادمین ها"
+    >
       <form
         style={{
           width: "100%",

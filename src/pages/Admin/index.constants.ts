@@ -24,6 +24,7 @@ export const adminFormValidation = zod.object({
     .regex(/^(\+98|0)?9\d{9}$/, "شماره تماس وارد شده فرمت نادرستی دارد"),
   password: zod
     .string({ required_error: "گذرواژه خود را وارد کنید" })
-    .min(8, "گذرواژه باید 8 کاراکتر داشته باشد"),
+    .min(8, "گذرواژه باید 8 کاراکتر داشته باشد")
+    .optional(),
   isActive: zod.boolean().optional(),
 });

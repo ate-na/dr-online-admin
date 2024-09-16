@@ -1,4 +1,4 @@
-import { Box, DialogActions, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { TConfirm } from "./index.types";
 import Button from "../Button";
 import Modal from "../Modal";

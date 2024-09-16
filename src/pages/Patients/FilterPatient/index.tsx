@@ -1,9 +1,5 @@
 import { useForm } from "react-hook-form";
-import {
-  IFilterPatient,
-  TFilterPatient,
-  TFilterPatientFormValidation,
-} from "./index.types";
+import { TFilterPatient, TFilterPatientFormValidation } from "./index.types";
 import Modal from "../../../components/kits/Modal";
 import { Button } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
@@ -31,7 +27,6 @@ const FilterPatientDialog: TFilterPatient = ({ open = false, handleClose }) => {
 
   return (
     <Modal
-      height="60%"
       width="35%"
       open={open}
       handleClose={handleClose}

@@ -13,12 +13,12 @@ export const Api = createApi({
       }
       return headers;
     },
-    validateStatus(response, body) {
+    validateStatus(response) {
       if (response.status === 401) {
         localStorage.clear();
       }
       return response.status === 200 || response.status === 201;
     },
   }),
-  endpoints: (build) => ({}),
+  endpoints: () => ({}),
 });

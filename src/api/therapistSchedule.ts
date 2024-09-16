@@ -3,7 +3,7 @@ import {
   TTherapistSchedulesPageRes,
 } from "../types/therapist.modal";
 import { Api } from "./base";
-import { provideTags, provideTagsType } from "./index.constant";
+import { provideTagsType } from "./index.constant";
 
 const TherapistScheduleApi = Api.injectEndpoints({
   endpoints: (build) => ({

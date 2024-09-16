@@ -39,7 +39,6 @@ const FilterCategoryForm: TFilterCategory = ({
 
   return (
     <Modal
-      height="40%"
       width="35%"
       title="جست جوی جدول زمینه ها"
       open={open}

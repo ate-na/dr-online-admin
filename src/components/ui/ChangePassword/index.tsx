@@ -45,7 +45,6 @@ const ChangePasswordDialog: TChangePasswordDialog = ({
   return (
     <Modal
       width="30%"
-      height="40%"
       open={open}
       handleClose={handleClose}
       title="ویرایش پسوورد"

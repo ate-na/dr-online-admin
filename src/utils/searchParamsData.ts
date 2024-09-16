@@ -12,7 +12,9 @@ export const getSearchParamsFilters = (searchParams: URLSearchParams) => {
   return data.join(",");
 };
 
-export const prepareSearchParamsData = <T extends Object>(data: T): T => {
+export const prepareSearchParamsData = <T extends Record<string, any>>(
+  data: T
+): T => {
   Object.keys(data).forEach(
     (key) => data[key] === undefined && delete data[key]
   );

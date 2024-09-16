@@ -8,7 +8,7 @@ const AuthContext = createContext<IAuthContext>({
   isLoggedIn: false,
   user: undefined,
   token: "",
-  Login: (data: ILoginProps) => {},
+  Login: () => {},
   Logout: () => {},
 });
 
@@ -42,10 +42,9 @@ export const AuthContextProvider: TAuthContextProvider = ({ children }) => {
   const context: IAuthContext = {
     Login,
     Logout,
-    user,
+    user: user,
     isLoggedIn: !!token,
     token,
-    user: user as IAdmin,
   };
 
   return (

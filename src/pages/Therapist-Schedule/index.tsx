@@ -30,7 +30,9 @@ const TherapistScheduleChart: TTherapistSchedulesChart = ({}) => {
   );
   const [submit, deleteData] = useDeleteTherapistScheduleMutation();
 
-  const { data: therapist } = useGetTherapistByIdQuery(+therapistId || 0);
+  const { data: therapist } = useGetTherapistByIdQuery(
+    +(therapistId as any) || 0
+  );
 
   const handleDelete = (value: ITherapistSchedules) => {
     setOpenDeleteDialog(() => value);

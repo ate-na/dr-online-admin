@@ -1,10 +1,10 @@
-import { IPatient, IPatientPageRes } from "../types/patient.modal";
+import { IPatient, TPatientPageRes } from "../types/patient.modal";
 import { Api } from "./base";
 import { provideTagsType } from "./index.constant";
 
 const PatientSlice = Api.injectEndpoints({
   endpoints: (build) => ({
-    getAllPatient: build.query<IPatientPageRes, string>({
+    getAllPatient: build.query<TPatientPageRes, string>({
       query: (query: string) => {
         return {
           url: `/Patient${query ? `?${query}` : ""}`,

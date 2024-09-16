@@ -45,7 +45,6 @@ const CreateOrEditPatient: TCreateOrEditPatient = ({
           onUpdate(values);
           reset({
             firstName: "",
-            isActive: undefined,
             lastName: "",
             password: "",
             phone: "",
@@ -54,7 +53,6 @@ const CreateOrEditPatient: TCreateOrEditPatient = ({
         } else {
           onSubmit({
             ...value,
-            isActive: !!value.isActive,
           });
           reset();
           handleClose();
@@ -77,7 +75,6 @@ const CreateOrEditPatient: TCreateOrEditPatient = ({
 
   return (
     <Modal
-      height="50%"
       title="افزودن زمینه جدید"
       open={open}
       handleClose={closeModalHandler}

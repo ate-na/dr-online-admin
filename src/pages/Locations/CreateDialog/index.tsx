@@ -69,9 +69,7 @@ const CreateLocation: TCreateLocation = ({
       justifyContent={"flex-start"}
       alignItems="flex-start"
       bgcolor={"#282E34"}
-      p={2}
       width={"40%"}
-      height={"50%"}
       open={open}
       handleClose={onCloseHanlder}
     >

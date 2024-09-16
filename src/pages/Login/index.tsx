@@ -13,7 +13,6 @@ import { loginFormValidation } from "./index.constant";
 import { TLoginFC } from "./index.type";
 import FlexBox from "../../components/kits/FlexBox";
 import useAuth from "../../hooks/useAuth";
-import toast from "react-hot-toast";
 import { useState } from "react";
 import Button from "../../components/kits/Button";
 

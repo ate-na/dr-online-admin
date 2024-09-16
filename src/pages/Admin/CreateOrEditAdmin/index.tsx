@@ -43,10 +43,8 @@ const CreateOrEditAdmin: TCreateOrEditAdmin = ({
       if (value) {
         if (data?.id) {
           const values = { ...value, id: data.id };
-          if (values.password) {
-            delete values?.password;
-          }
-          onUpdate(values);
+          if (values?.password) delete values?.password;
+          onUpdate(values as any);
           reset({
             firstName: "",
             isActive: undefined,
@@ -81,7 +79,6 @@ const CreateOrEditAdmin: TCreateOrEditAdmin = ({
 
   return (
     <Modal
-      height="80%"
       title="افزودن زمینه جدید"
       open={open}
       handleClose={closeModalHandler}
